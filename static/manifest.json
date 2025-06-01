@@ -2,10 +2,11 @@
     "name": "Do Things",
     "short_name": "Do Things",
     "start_url": "/",
-    "display_override": ["window-controls-overlay"],
-    "display": "standalone",
-    "background_color": "transparent",
-    "theme_color": "transparent",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "background_color": "#000000",
+    "theme_color": "#000000",
+    "display_override": ["fullscreen"],
     "icons": [
         {
             "src": "/icons/icon-192x192.png",
