@@ -1,11 +1,24 @@
-﻿html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+﻿:root {
+	--sat: env(safe-area-inset-top);
+	--sar: env(safe-area-inset-right);
+	--sab: env(safe-area-inset-bottom);
+	--sal: env(safe-area-inset-left);
+}
+
+html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	/* Add safe area padding */
+	padding: var(--sat) var(--sar) var(--sab) var(--sal);
+	/* Ensure body takes up full height */
+	min-height: 100vh;
+	/* Prevent content from being hidden behind notch */
+	box-sizing: border-box;
 }
