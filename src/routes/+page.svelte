@@ -16,7 +16,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: linear-gradient(135deg, #0575e6, #00f260);
+		background: linear-gradient(180deg, #4785ff, #7b4aff);
 		font-family: 'Montserrat', sans-serif;
 		margin: 0;
 		padding: 0;

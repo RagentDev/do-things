@@ -5,18 +5,12 @@
 	--sal: env(safe-area-inset-left);
 }
 
-html {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-}
-
-body {
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	/* Ensure body takes up full height */
-	min-height: 100vh;
-	/* Prevent content from being hidden behind notch */
-	box-sizing: border-box;
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    touch-action: none; /* Prevents all touch gestures */
 }
