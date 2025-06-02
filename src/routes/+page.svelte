@@ -2,63 +2,13 @@
 	// Any component logic can go here
 </script>
 
-<div class="container">
-	<div class="content">
-		<h1 class="title">Do Things<span class="accent">.</span></h1>
-		<p class="slogan">In life<span class="accent">.</span></p>
+<div class="fixed inset-0 flex justify-center items-center font-['Montserrat',sans-serif] z-0">
+	<div class="text-center p-8 rounded-xl bg-white/10 backdrop-blur-md shadow-lg">
+		<h1 class="text-5xl md:text-7xl font-bold text-white mb-2 tracking-tight">
+			Do Things<span class="text-yellow-400 font-bold">.</span>
+		</h1>
+		<p class="text-2xl md:text-4xl text-white/90 font-light mt-0">
+			In life<span class="text-yellow-400 font-bold">.</span>
+		</p>
 	</div>
 </div>
-
-<style>
-	.container {
-		width: 100%;
-		min-height: 100vh;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		background: linear-gradient(180deg, #4785ff, #7b4aff);
-		font-family: 'Montserrat', sans-serif;
-		margin: 0;
-		padding: 0;
-	}
-
-	.content {
-		text-align: center;
-		padding: 2rem;
-		border-radius: 12px;
-		background-color: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(10px);
-		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-	}
-
-	.title {
-		font-size: 5rem;
-		font-weight: 700;
-		color: white;
-		margin-bottom: 0.5rem;
-		letter-spacing: -0.05em;
-	}
-
-	.slogan {
-		font-size: 2.5rem;
-		color: rgba(255, 255, 255, 0.9);
-		font-weight: 300;
-		margin-top: 0;
-	}
-
-	.accent {
-		color: #ffd700;
-		font-weight: 700;
-	}
-
-	/* Responsive adjustments */
-	@media (max-width: 768px) {
-		.title {
-			font-size: 3.5rem;
-		}
-
-		.slogan {
-			font-size: 1.8rem;
-		}
-	}
-</style>

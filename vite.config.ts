@@ -1,9 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint2';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
 	plugins: [
+		tailwindcss(),
 		sveltekit(),
 		eslint({
 			// Specify these options to ensure Prettier errors are included
