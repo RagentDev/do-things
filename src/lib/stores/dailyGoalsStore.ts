@@ -1,75 +1,209 @@
 ﻿// src/lib/stores/dailyGoalsStore.ts
-import { writable, derived, type Writable, type Readable } from 'svelte/store';
+import { writable, get, type Writable, type Readable } from 'svelte/store';
+import { formatDateToYYYYMMDD } from '$lib/utils/dateUtils';
 
 // Define the store state interface
 interface IDailyGoalsState {
-	goals: IDailyGoal[];
+	goalSetups: IDailyGoalSetup[];
+	goals: Record<string, Record<string, IDailyGoal>>;
 }
 
-// Initial state
-const initialState: IDailyGoalsState = {
-	goals: []
+const STORE_NAME = 'dailyGoalsStore';
+const INITIAL_STATE: IDailyGoalsState = {
+	goalSetups: [],
+	goals: {}
 };
 
-const storeName = 'dailyGoalsStore';
-
-// Check local storage for existing data
-const storedUser: IDailyGoalsState =
-	typeof localStorage !== 'undefined'
-		? JSON.parse(localStorage.getItem(storeName) || 'null') || initialState
-		: initialState;
-
-// Define the store interface with its actions
-interface DailyGoalsStore extends Readable<IDailyGoalsState> {
-	changeValue: (newVal: boolean) => Promise<void>;
+interface IDailyGoalsStore extends Readable<IDailyGoalsState> {
+	subscribe: (
+		run: (value: IDailyGoalsState) => void,
+		invalidate?: (value?: IDailyGoalsState) => void
+	) => () => void;
+	addGoalSetup: (goal: IDailyGoalSetup) => void;
+	getGoals: (date: Date) => IDailyGoal[];
+	addValueToGoal: (goalId: string, date: Date, increase: number) => void;
 	reset: () => void;
 }
 
-// Create the store
-function createDailyGoalsStore(): DailyGoalsStore {
-	const { subscribe, set, update }: Writable<IDailyGoalsState> =
-		writable<IDailyGoalsState>(storedUser);
+class DailyGoalsStoreImpl implements IDailyGoalsStore {
+	private readonly store: Writable<IDailyGoalsState>;
 
-	// Subscribe to changes and store them in localStorage
-	if (typeof window !== 'undefined') {
-		subscribe((state: IDailyGoalsState) => {
-			localStorage.setItem(storeName, JSON.stringify(state));
-		});
+	constructor() {
+		// Initialize store with data from localStorage
+		this.store = writable<IDailyGoalsState>(this.loadStateFromStorage());
+
+		// Set up localStorage persistence
+		if (typeof window !== 'undefined') {
+			this.store.subscribe((state) => {
+				this.saveStateToStorage(state);
+			});
+		}
 	}
 
-	return {
-		subscribe,
+	subscribe(
+		run: (value: IDailyGoalsState) => void,
+		invalidate?: (value?: IDailyGoalsState) => void
+	) {
+		return this.store.subscribe(run, invalidate);
+	}
 
-		// Actions
-		changeValue: async (newVal: boolean): Promise<void> => {
-			update((state) => ({ ...state, testVar2: newVal }));
-		},
+	reset(): void {
+		this.store.set(INITIAL_STATE);
+	}
 
-		addGoal: async (goalSetup: IDailyGoalSetup): Promise<void> => {
-			const completeGoal: IDailyGoal = {
-				name: goalSetup.name,
-				icon: goalSetup.icon,
-				currentAmount: 0,
-				maxAmount: goalSetup.requiredAmount,
-				frequency: goalSetup.frequency
+	getGoals(date: Date): IDailyGoal[] {
+		const formattedDate = formatDateToYYYYMMDD(date);
+		const state = this.getState();
+
+		// Return goals for the requested date
+		let goalDateRecords = state.goals[formattedDate] || {};
+
+		// Read goal setups
+		const goalSetups = this.getGoalSetups(date);
+
+		for (const setup of goalSetups) {
+			// If this setup doesn't have a goal for this date, create one
+			if (!goalDateRecords[setup.id]) {
+				// Create a new daily goal instance
+				const newGoal: IDailyGoal = {
+					goalSetupId: setup.id,
+					name: setup.name,
+					icon: setup.icon,
+					currentAmount: 0,
+					maxAmount: setup.requiredAmount,
+					frequency: setup.frequency
+				};
+
+				// Add the goal to the state
+				const hasAddedGoal = this.addGoalToState(newGoal, date);
+
+				// Update our local reference of goalDateRecords
+				if (hasAddedGoal) {
+					goalDateRecords = {
+						...goalDateRecords,
+						[setup.id]: newGoal
+					};
+				}
+			}
+		}
+
+		// finally return all goals with the updated records
+		return Object.values(goalDateRecords);
+	}
+
+	addValueToGoal(goalId: string, date: Date, increase: number): void {
+		const formattedDate = formatDateToYYYYMMDD(date);
+
+		this.store.update((state) => {
+			const goalsForDate = state.goals[formattedDate] || {};
+			const targetGoal = goalsForDate[goalId];
+
+			if (!targetGoal) {
+				// Goal doesn't exist for this date, return state unchanged
+				return state;
+			}
+
+			// Create updated goal with new current amount
+			const updatedGoal = {
+				...targetGoal,
+				currentAmount: Math.max(0, targetGoal.currentAmount + increase) // Prevent negative values
 			};
 
-			update((state) => ({
-				...state,
-				goals: [...state.goals, completeGoal]
-			}));
-		},
+			// Create updated goals for this date
+			const updatedGoalsForDate = {
+				...goalsForDate,
+				[goalId]: updatedGoal
+			};
 
-		// For testing/debugging
-		reset: (): void => set(initialState)
-	};
+			// Create updated goals dictionary
+			const updatedGoals = {
+				...state.goals,
+				[formattedDate]: updatedGoalsForDate
+			};
+
+			// Return updated state
+			return {
+				...state,
+				goals: updatedGoals
+			};
+		});
+	}
+	addGoalSetup(goalSetup: IDailyGoalSetup): void {
+		this.store.update((state) => ({
+			...state,
+			goalSetups: [...state.goalSetups, goalSetup]
+		}));
+	}
+
+	private getGoalSetups(date: Date): IDailyGoalSetup[] {
+		const state = this.getState();
+		return state.goalSetups.filter((setup) => setup.startDate <= date);
+	}
+
+	private addGoalToState(goal: IDailyGoal, date: Date): boolean {
+		const formattedDate = formatDateToYYYYMMDD(date);
+		let wasAdded = false;
+
+		this.store.update((state) => {
+			// Get existing goals for this date or create empty object
+			const goalsForDate = state.goals[formattedDate] || {};
+
+			// Check if this goal already exists (prevent duplicate)
+			if (goalsForDate[goal.goalSetupId]) {
+				// Goal already exists, don't add it
+				wasAdded = false;
+				return state; // Return state unchanged
+			}
+
+			wasAdded = true;
+
+			// Create updated goals for this specific date
+			const updatedGoalsForDate = {
+				...goalsForDate,
+				[goal.goalSetupId]: goal
+			};
+
+			// Create updated goals dictionary with new date entry
+			const updatedGoals = {
+				...state.goals,
+				[formattedDate]: updatedGoalsForDate
+			};
+
+			// Return updated state
+			return {
+				...state,
+				goals: updatedGoals
+			};
+		});
+
+		return wasAdded;
+	}
+
+	private loadStateFromStorage(): IDailyGoalsState {
+		if (typeof localStorage === 'undefined') return INITIAL_STATE;
+
+		try {
+			const savedState = localStorage.getItem(STORE_NAME);
+			return savedState ? JSON.parse(savedState) : INITIAL_STATE;
+		} catch (error) {
+			console.error('Failed to load state from localStorage:', error);
+			return INITIAL_STATE;
+		}
+	}
+
+	private saveStateToStorage(state: IDailyGoalsState): void {
+		if (typeof localStorage === 'undefined') return;
+
+		try {
+			localStorage.setItem(STORE_NAME, JSON.stringify(state));
+		} catch (error) {
+			console.error('Failed to save state to localStorage:', error);
+		}
+	}
+
+	private getState(): IDailyGoalsState {
+		return get(this.store);
+	}
 }
 
-// Create and export the store
-export const dailyGoalsStore: DailyGoalsStore = createDailyGoalsStore();
-
-// Export derived stores for convenience
-export const isTestVar: Readable<boolean> = derived<DailyGoalsStore, boolean>(
-	dailyGoalsStore,
-	($store) => $store.testVar2
-);
+export const dailyGoalsStore: IDailyGoalsStore = new DailyGoalsStoreImpl();
