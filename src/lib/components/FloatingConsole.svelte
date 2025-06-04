@@ -14,6 +14,7 @@
 	let position = $state<Position>({ x: 20, y: 20 });
 	let dragOffset = $state<Position>({ x: 0, y: 0 });
 	let consoleElement: HTMLDivElement | undefined = $state();
+	let logContainer: HTMLDivElement | undefined = $state();
 	let autoScroll = $state<boolean>(true);
 
 	function formatMessage(message: unknown): string {
@@ -78,13 +79,42 @@
 		}
 	}
 
-	// Auto-scroll to bottom when new logs are added
-	$effect(() => {
-		if (autoScroll && consoleElement) {
-			const logContainer = consoleElement.querySelector('.log-container') as HTMLElement;
-			if (logContainer) {
-				logContainer.scrollTop = logContainer.scrollHeight;
+	function scrollToBottom(): void {
+		if (autoScroll && logContainer) {
+			// Use requestAnimationFrame to ensure DOM is updated
+			requestAnimationFrame(() => {
+				if (logContainer) {
+					logContainer.scrollTop = logContainer.scrollHeight;
+				}
+			});
+		}
+	}
+
+	// Check if user has scrolled up manually
+	function handleScroll(): void {
+		if (logContainer && autoScroll) {
+			const { scrollTop, scrollHeight, clientHeight } = logContainer;
+			// If user scrolled away from bottom, disable auto-scroll temporarily
+			if (scrollTop + clientHeight < scrollHeight - 10) {
+				// User has scrolled up, but don't disable autoScroll permanently
+				// Instead, we'll just not scroll this time
 			}
+		}
+	}
+
+	// Auto-scroll effect - triggered when logs change
+	$effect(() => {
+		// This effect runs whenever logger.logs changes
+		const logsLength = logger.logs.length;
+		if (logsLength > 0) {
+			scrollToBottom();
+		}
+	});
+
+	// Effect for when autoScroll is toggled
+	$effect(() => {
+		if (autoScroll) {
+			scrollToBottom();
 		}
 	});
 </script>
@@ -107,7 +137,7 @@
 			tabindex="0"
 			aria-label="Drag to move console"
 		>
-			<span class="console-title">Custom Console</span>
+			<span class="console-title">Custom Console ({logger.logs.length})</span>
 			<div class="console-controls">
 				<button
 					onclick={() => logger.toggle()}
@@ -133,8 +163,18 @@
 					class:active={autoScroll}
 					aria-label={autoScroll ? 'Disable auto-scroll' : 'Enable auto-scroll'}
 					type="button"
+					title={autoScroll ? 'Auto-scroll enabled' : 'Auto-scroll disabled'}
 				>
-					📌
+					{autoScroll ? '📌' : '📌'}
+				</button>
+				<button
+					onclick={scrollToBottom}
+					class="control-btn"
+					aria-label="Scroll to bottom"
+					type="button"
+					title="Scroll to bottom"
+				>
+					⬇️
 				</button>
 				<button
 					onclick={() => (isVisible = false)}
@@ -147,8 +187,21 @@
 			</div>
 		</div>
 
+		<!-- Status Bar -->
+		{#if !logger.isPlaying}
+			<div class="status-bar">
+				<span class="status-warning">⚠️ Logging paused - new logs will be discarded</span>
+			</div>
+		{/if}
+
 		<!-- Log Container -->
-		<div class="log-container" role="log" aria-live="polite">
+		<div
+			bind:this={logContainer}
+			class="log-container"
+			role="log"
+			aria-live="polite"
+			onscroll={handleScroll}
+		>
 			{#each logger.logs as log (log.id)}
 				<div class="log-entry {log.level}" role="listitem">
 					<span class="log-time">{formatTime(log.timestamp)}</span>
@@ -174,12 +227,16 @@
 <!-- Toggle Button (Bottom Right) -->
 <button
 	class="toggle-btn"
+	class:has-logs={logger.logs.length > 0}
 	onclick={() => (isVisible = !isVisible)}
-	title="Toggle Console"
+	title="Toggle Console ({logger.logs.length} logs)"
 	aria-label={isVisible ? 'Hide console' : 'Show console'}
 	type="button"
 >
 	🖥️
+	{#if logger.logs.length > 0}
+		<span class="log-count">{logger.logs.length}</span>
+	{/if}
 </button>
 
 <style>
@@ -223,6 +280,21 @@
 	.console-controls {
 		display: flex;
 		gap: 4px;
+	}
+
+	.status-bar {
+		background: #fff3cd;
+		border-bottom: 1px solid #e0e0e0;
+		padding: 4px 12px;
+		font-size: 11px;
+		color: #856404;
+		display: flex;
+		align-items: center;
+	}
+
+	.status-warning {
+		color: #856404;
+		font-size: 10px;
 	}
 
 	.control-btn {
@@ -270,6 +342,7 @@
 		padding: 8px;
 		background: #fafafa;
 		border-radius: 0 0 8px 8px;
+		scroll-behavior: smooth;
 	}
 
 	.log-entry {
@@ -329,6 +402,9 @@
 		transition:
 			transform 0.2s,
 			background-color 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.toggle-btn:hover {
@@ -341,12 +417,40 @@
 		outline-offset: 2px;
 	}
 
+	.toggle-btn.has-logs {
+		background: #4caf50;
+	}
+
+	.toggle-btn.has-logs:hover {
+		background: #388e3c;
+	}
+
+	.log-count {
+		position: absolute;
+		top: -8px;
+		right: -8px;
+		background: #f44336;
+		color: white;
+		border-radius: 50%;
+		min-width: 20px;
+		height: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 10px;
+		font-weight: bold;
+		padding: 0 4px;
+	}
+
 	/* Text color utilities */
 	:global(.text-gray-800) {
 		color: #1f2937;
 	}
 	:global(.text-blue-600) {
 		color: #2563eb;
+	}
+	:global(.text-green-800) {
+		color: #166534;
 	}
 	:global(.text-yellow-600) {
 		color: #d97706;
