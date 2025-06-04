@@ -21,7 +21,11 @@ export default ts.config(
 		languageOptions: {
 			globals: { ...globals.browser, ...globals.node }
 		},
-		rules: { 'no-undef': 'off', 'svelte/require-each-key': 'off' }
+		rules: {
+			'no-undef': 'off',
+			'svelte/require-each-key': 'off',
+			'@typescript-eslint/no-unused-vars': 'off'
+		}
 	},
 	{
 		files: ['**/*.svelte', '**/*.svelte.ts', '**/*.svelte.js'],
