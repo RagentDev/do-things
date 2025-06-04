@@ -16,12 +16,5 @@ export default defineConfig({
 			emitWarning: true,
 			emitError: true
 		})
-	],
-	build: {
-		rollupOptions: {
-			external: (id) => {
-				return id.includes('/routes/test/');
-			}
-		}
-	}
+	]
 });
