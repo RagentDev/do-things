@@ -1,0 +1,3 @@
+﻿# .gitattributes
+* text=auto eol=lf
+*.{js,ts,svelte,json,md,html,css,scss} text eol=lf
