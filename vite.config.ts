@@ -3,8 +3,6 @@ import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint2';
 import tailwindcss from '@tailwindcss/vite';
 
-process.env.NODE_ENV = 'production';
-
 export default defineConfig({
 	plugins: [
 		tailwindcss(),
