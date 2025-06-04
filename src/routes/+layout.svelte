@@ -3,6 +3,7 @@
 	import InstallPrompt from '$lib/components/InstallPrompt.svelte';
 	import TestTailWind from '$lib/components/TestTailWind.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
+	import FloatingConsole from '$lib/components/FloatingConsole.svelte';
 </script>
 
 <svelte:head>
@@ -34,3 +35,4 @@
 	<!-- Bottom Safe Area -->
 	<div class="w-full bg-gray-400 flex-shrink-0" style="height: var(--sab);"></div>
 </div>
+<FloatingConsole />

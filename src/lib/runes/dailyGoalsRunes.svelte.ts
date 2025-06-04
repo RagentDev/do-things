@@ -1,5 +1,6 @@
 ﻿// src/lib/runes/dailyGoalsRunes.ts
 import { formatDateToYYYYMMDD } from '$lib/utils/dateUtils';
+import { logger } from '$lib/runes/loggerRunes.svelte';
 
 // Define the state interface (same as before)
 interface IDailyGoalsState {
@@ -49,8 +50,10 @@ const dailyGoalsImpl = {
 	// Actions
 	// Add initialization method
 	initialize() {
+		logger.info('Daily Goals: Initializing rune store.');
 		if (typeof window !== 'undefined' && !persistenceInitialized) {
 			persistenceInitialized = true;
+			logger.success('Daily Goals: Rune store initialized.');
 			$effect(() => {
 				saveStateToStorage(dailyGoalsState);
 			});
@@ -58,14 +61,17 @@ const dailyGoalsImpl = {
 	},
 
 	reset() {
+		logger.info('Daily Goals: Resetting rune store.');
 		dailyGoalsState.goalSetups.length = 0;
 		Object.keys(dailyGoalsState.goals).forEach((key) => {
 			delete dailyGoalsState.goals[key];
 		});
+		logger.success('Daily Goals: Reset rune store.');
 	},
 
 	addGoalSetup(goalSetup: IDailyGoalSetup) {
 		dailyGoalsState.goalSetups.push(goalSetup);
+		logger.info(`Daily Goals: Added new goal - ${JSON.stringify(goalSetup)}`);
 	},
 
 	getGoals(date: Date): IDailyGoal[] {
@@ -74,16 +80,18 @@ const dailyGoalsImpl = {
 		let goalDateRecords = dailyGoalsState.goals[formattedDate] || {};
 
 		const activeSetups = getActiveGoalSetups(date);
-
-		console.log(`Goal Date Records for ${formattedDate}: ` + JSON.stringify(goalDateRecords));
-		console.log(`Active Setups for ${formattedDate}: ` + JSON.stringify(activeSetups));
+		logger.info(`Daily Goals: Getting goals, found ${activeSetups.length} for today.`);
 
 		for (const setup of activeSetups) {
 			if (!goalDateRecords[setup.id]) {
+				logger.info(`Daily Goals: Could not find '${setup.name}', creating...`);
 				const newGoal = createDailyGoal(setup);
 				const hasAdded = addGoalToState(newGoal, date);
 				if (hasAdded) {
 					goalDateRecords = { ...goalDateRecords, [setup.id]: newGoal };
+					logger.success(`Daily Goals: Successfully created '${setup.name}'.`);
+				} else {
+					logger.error(`Daily Goals: Could not create '${setup.name}'.`);
 				}
 			}
 		}
