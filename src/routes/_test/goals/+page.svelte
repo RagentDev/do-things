@@ -1,7 +1,7 @@
 ﻿<script lang="ts">
 	import { onMount } from 'svelte';
 	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
-	import { formatDateToYYYYMMDD } from '$lib/utils/dateUtils';
+	import * as dateFns from 'date-fns';
 
 	// Initialize persistence when component mounts
 	onMount(() => {
@@ -12,7 +12,7 @@
 	let goalName = '';
 	let goalIcon = 'fa:FaRunning';
 	let requiredAmount = 1;
-	let startDate = formatDateToYYYYMMDD(new Date());
+	let startDate = dateFns.format(new Date(), 'yyyy-MM-dd');
 
 	// Days active state
 	let daysActive: IDaysActive = {
@@ -49,7 +49,7 @@
 		goalName = '';
 		goalIcon = 'fa:FaRunning';
 		requiredAmount = 1;
-		startDate = formatDateToYYYYMMDD(new Date());
+		startDate = dateFns.format(new Date(), 'yyyy-MM-dd');
 		daysActive = {
 			monday: true,
 			tuesday: true,

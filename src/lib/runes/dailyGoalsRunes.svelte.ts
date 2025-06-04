@@ -1,8 +1,6 @@
-﻿// src/lib/runes/dailyGoalsRunes.ts
-import { formatDateToYYYYMMDD } from '$lib/utils/dateUtils';
-import { logger } from '$lib/runes/loggerRunes.svelte';
+﻿import { logger } from '$lib/runes/loggerRunes.svelte';
+import * as dateFns from 'date-fns';
 
-// Define the state interface (same as before)
 interface IDailyGoalsState {
 	goalSetups: IDailyGoalSetup[];
 	goals: Record<string, Record<string, IDailyGoal>>;
@@ -14,20 +12,14 @@ const INITIAL_STATE: IDailyGoalsState = {
 	goals: {}
 };
 
-// Create the global state rune
 const dailyGoalsState = $state<IDailyGoalsState>(loadStateFromStorage());
-
-// Track if we've initialized persistence
 let persistenceInitialized = false;
 
-// public api
 interface IDailyGoalsManager {
-	// Reactive getters
 	readonly state: IDailyGoalsState;
 	readonly goalSetups: IDailyGoalSetup[];
 	readonly allGoals: Record<string, Record<string, IDailyGoal>>;
 
-	// Actions
 	reset(): void;
 	initialize(): void;
 	addGoalSetup(goalSetup: IDailyGoalSetup): void;
@@ -47,8 +39,6 @@ const dailyGoalsImpl = {
 		return dailyGoalsState.goals;
 	},
 
-	// Actions
-	// Add initialization method
 	initialize() {
 		logger.info('Daily Goals: Initializing rune store.');
 		if (typeof window !== 'undefined' && !persistenceInitialized) {
@@ -120,16 +110,9 @@ export const dailyGoals: IDailyGoalsManager = dailyGoalsImpl;
 
 // Helper functions
 function getActiveGoalSetups(date: Date): IDailyGoalSetup[] {
-	const targetDate = new Date(date);
-	targetDate.setHours(0, 0, 0, 0);
-
-	return dailyGoalsState.goalSetups.filter((setup) => {
-		// Normalize setup date to start of day
-		const setupDate = new Date(setup.startDate);
-		setupDate.setHours(0, 0, 0, 0);
-
-		return setupDate <= targetDate;
-	});
+	return dailyGoalsState.goalSetups.filter(
+		(setup) => !dateFns.isAfter(new Date(setup.startDate), date)
+	);
 }
 
 function createDailyGoal(setup: IDailyGoalSetup): IDailyGoal {
@@ -156,6 +139,10 @@ function addGoalToState(goal: IDailyGoal, date: Date): boolean {
 
 	dailyGoalsState.goals[formattedDate][goal.goalSetupId] = goal;
 	return true;
+}
+
+function formatDateToYYYYMMDD(date: Date): string {
+	return dateFns.format(date, 'yyyy-MM-dd');
 }
 
 function loadStateFromStorage(): IDailyGoalsState {

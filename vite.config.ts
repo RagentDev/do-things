@@ -3,6 +3,8 @@ import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint2';
 import tailwindcss from '@tailwindcss/vite';
 
+process.env.NODE_ENV = 'production';
+
 export default defineConfig({
 	plugins: [
 		tailwindcss(),
@@ -14,5 +16,12 @@ export default defineConfig({
 			emitWarning: true,
 			emitError: true
 		})
-	]
+	],
+	build: {
+		rollupOptions: {
+			external: (id) => {
+				return id.includes('/routes/test/');
+			}
+		}
+	}
 });
