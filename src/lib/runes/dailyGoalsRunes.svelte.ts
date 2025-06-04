@@ -108,7 +108,10 @@ const dailyGoalsImpl = {
 
 		const targetGoal = dailyGoalsState.goals[formattedDate][goalId];
 		if (targetGoal) {
+			logger.info(`Daily Goals: Adding value '${increase}' to '${targetGoal.name}'.`);
 			targetGoal.currentAmount = Math.max(0, targetGoal.currentAmount + increase);
+		} else {
+			console.error('Could not find target goal.');
 		}
 	}
 } satisfies IDailyGoalsManager;
