@@ -1,6 +1,6 @@
 ﻿<script lang="ts">
 	import { logger } from '$lib/runes/loggerRunes.svelte';
-	import LogEntry from '$lib/components/console/LogEntry.svelte';
+	import TextConsoleLogEntry from '$lib/components/console/TextConsoleLogEntry.svelte';
 
 	interface Props {
 		autoScroll: boolean;
@@ -48,7 +48,7 @@
 	onscroll={handleScroll}
 >
 	{#each logger.logs as log (log.id)}
-		<LogEntry {log} />
+		<TextConsoleLogEntry {log} />
 	{/each}
 
 	{#if logger.logs.length === 0}

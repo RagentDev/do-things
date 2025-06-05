@@ -1,8 +1,8 @@
 ﻿<script lang="ts">
 	import { logger } from '$lib/runes/loggerRunes.svelte';
-	import ConsoleHeader from '$lib/components/console/ConsoleHeader.svelte';
 	import type { Position } from '$lib/types';
 	import ContainerConsoleLogs from '$lib/components/console/ContainerConsoleLogs.svelte';
+	import ContainerConsoleHeader from '$lib/components/console/ContainerConsoleHeader.svelte';
 
 	if (!logger) {
 		throw new Error('Logger context not found');
@@ -56,7 +56,7 @@
 		style="left: {position.x}px; top: {position.y}px;"
 		role="dialog"
 	>
-		<ConsoleHeader
+		<ContainerConsoleHeader
 			{handleMouseDown}
 			{handleKeyDown}
 			logCount={logger.logs.length}

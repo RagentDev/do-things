@@ -62,9 +62,9 @@
 	role="listitem"
 >
 	<span class="text-gray-600 mr-2 min-w-[70px]">{formatTime(log.timestamp)}</span>
-	<span class="mr-2 font-bold min-w-[50px] {getLevelClass(log.level)}"
-		>[{log.level.toUpperCase()}]</span
-	>
+	<span class="mr-2 font-bold min-w-[50px] {getLevelClass(log.level)}">
+		[{log.level.toUpperCase()}]
+	</span>
 	<span class="flex-1 break-words">
 		{#each log.messages as message, i}
 			{#if i > 0}<span class="mr-2"> </span>{/if}
