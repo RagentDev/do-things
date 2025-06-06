@@ -1,5 +1,5 @@
 ﻿// Define the state interfaces
-import { isDev, isProd } from '$lib/config';
+import { isDev } from '$lib/config';
 
 export type LogLevel = 'log' | 'info' | 'success' | 'warn' | 'error' | 'debug';
 

@@ -338,27 +338,6 @@
 		font-size: 16px;
 	}
 
-	.days-selector {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-	}
-
-	.day-checkbox {
-		display: flex;
-		align-items: center;
-	}
-
-	.day-checkbox input {
-		width: auto;
-		margin-right: 5px;
-	}
-
-	.day-checkbox label {
-		margin: 0;
-		font-weight: normal;
-	}
-
 	.btn {
 		background: #e0e0e0;
 		border: none;

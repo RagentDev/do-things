@@ -68,13 +68,13 @@ const dailyGoalsImpl = {
 	getGoals(date: Date): IDailyGoal[] {
 		// Same implementation as class version
 		const formattedDate = formatDateToYYYYMMDD(date);
-		let goalDateRecords = dailyGoalsState.goals[formattedDate] || {};
+		let goalDateRecords = dailyGoalsState.goals[formattedDate] ?? {};
 
 		const activeSetups = getActiveGoalSetups(date);
 		logger?.info(`Daily Goals: Getting goals, found ${activeSetups.length} for today.`);
 
 		for (const setup of activeSetups) {
-			if (!goalDateRecords[setup.id]) {
+			if (!(setup.id in goalDateRecords)) {
 				logger?.info(`Daily Goals: Could not find '${setup.name}', creating...`);
 				const newGoal = createDailyGoal(setup);
 				const hasAdded = addGoalToState(newGoal, date);
@@ -93,12 +93,12 @@ const dailyGoalsImpl = {
 	addValueToGoal(goalId: string, date: Date, increase: number) {
 		const formattedDate = formatDateToYYYYMMDD(date);
 
-		if (!dailyGoalsState.goals[formattedDate]) {
+		if (!(formattedDate in dailyGoalsState.goals)) {
 			dailyGoalsState.goals[formattedDate] = {};
 		}
 
-		const targetGoal = dailyGoalsState.goals[formattedDate][goalId];
-		if (targetGoal) {
+		if (goalId in dailyGoalsState.goals[formattedDate]) {
+			const targetGoal: IDailyGoal = dailyGoalsState.goals[formattedDate][goalId];
 			logger?.info(`Daily Goals: Adding value '${increase}' to '${targetGoal.name}'.`);
 			targetGoal.currentAmount = Math.max(0, targetGoal.currentAmount + increase);
 		} else {
@@ -130,11 +130,11 @@ function createDailyGoal(setup: IDailyGoalSetup): IDailyGoal {
 function addGoalToState(goal: IDailyGoal, date: Date): boolean {
 	const formattedDate = formatDateToYYYYMMDD(date);
 
-	if (!dailyGoalsState.goals[formattedDate]) {
+	if (!(formattedDate in dailyGoalsState.goals)) {
 		dailyGoalsState.goals[formattedDate] = {};
 	}
 
-	if (dailyGoalsState.goals[formattedDate][goal.goalSetupId]) {
+	if (goal.goalSetupId in dailyGoalsState.goals[formattedDate]) {
 		return false;
 	}
 

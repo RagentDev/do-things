@@ -3,6 +3,8 @@
 		path,
 		size = 24,
 		color = 'currentColor',
+		// TODO: FIX THIS
+		// eslint-disable-next-line svelte/valid-compile
 		...props
 	} = $props<{
 		path: string;

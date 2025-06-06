@@ -11,7 +11,7 @@
 
 	// Initialize persistence when component mounts
 	onMount(() => {
-		logger.initialize();
+		logger?.initialize();
 		dailyGoals.initialize();
 	});
 </script>

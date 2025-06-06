@@ -7,9 +7,7 @@
 
 	function toggleConsole(): void {
 		isVisible = !isVisible;
-		if (floatingConsole) {
-			floatingConsole.isVisible = isVisible;
-		}
+		floatingConsole.isVisible = isVisible;
 	}
 </script>
 
