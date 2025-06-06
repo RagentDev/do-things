@@ -1,4 +1,6 @@
 ﻿// Define the state interfaces
+import { isDev, isProd } from '$lib/config';
+
 export type LogLevel = 'log' | 'info' | 'success' | 'warn' | 'error' | 'debug';
 
 export interface ILogEntry {
@@ -34,6 +36,7 @@ interface ILoggerManager {
 	readonly status: 'playing' | 'paused';
 
 	// Actions
+	initialize(): void;
 	log(...messages: unknown[]): void;
 	info(...messages: unknown[]): void;
 	success(...messages: unknown[]): void;
@@ -69,6 +72,8 @@ const loggerImpl = {
 	get status(): 'playing' | 'paused' {
 		return loggerState.isPlaying ? 'playing' : 'paused';
 	},
+
+	initialize() {},
 
 	// Actions
 	log(...messages: unknown[]) {
@@ -138,7 +143,7 @@ const loggerImpl = {
 } satisfies ILoggerManager;
 
 // For global access (similar to your pattern)
-export const logger: ILoggerManager = loggerImpl;
+export const logger: ILoggerManager | null = isDev ? loggerImpl : null;
 
 // Helper functions
 function addLogToState(level: LogLevel, messages: unknown[]): void {

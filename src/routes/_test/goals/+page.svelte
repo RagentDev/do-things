@@ -1,12 +1,7 @@
 ﻿<script lang="ts">
-	import { onMount } from 'svelte';
 	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
 	import * as dateFns from 'date-fns';
-
-	// Initialize persistence when component mounts
-	onMount(() => {
-		dailyGoals.initialize();
-	});
+	import type { IDailyGoal, IDailyGoalSetup, IDaysActive } from '$lib/types';
 
 	// State for the form
 	let goalName = '';

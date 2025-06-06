@@ -1,9 +1,19 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import '../app.css';
 	import InstallPrompt from '$lib/components/InstallPrompt.svelte';
 	import TestTailWind from '$lib/components/TestTailWind.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
 	import DialogConsole from '$lib/components/console/DialogConsole.svelte';
+	import { isDev } from '$lib/config.js';
+	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
+	import { logger } from '$lib/runes/loggerRunes.svelte';
+
+	// Initialize persistence when component mounts
+	onMount(() => {
+		logger.initialize();
+		dailyGoals.initialize();
+	});
 </script>
 
 <svelte:head>
@@ -35,5 +45,7 @@
 	<!-- Bottom Safe Area -->
 	<div class="w-full bg-gray-400 flex-shrink-0" style="height: var(--sab);"></div>
 </div>
-<!--<FloatingConsole />-->
-<DialogConsole />
+
+{#if isDev}
+	<DialogConsole />
+{/if}

@@ -23,8 +23,7 @@ export default ts.config(
 		},
 		rules: {
 			'no-undef': 'off',
-			'svelte/require-each-key': 'off',
-			'@typescript-eslint/no-unused-vars': 'off'
+			'svelte/require-each-key': 'off'
 		}
 	},
 	{
