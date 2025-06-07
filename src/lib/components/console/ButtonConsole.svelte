@@ -2,7 +2,7 @@
 	import type { Snippet } from 'svelte';
 
 	interface Props {
-		onclick: () => void;
+		onclick?: () => void;
 		class?: string;
 		title?: string;
 		children: Snippet;

@@ -25,6 +25,7 @@ interface IDailyGoalsManager {
 	initialize(): void;
 	addGoalSetup(goalSetup: IDailyGoalSetup): void;
 	getGoals(date: Date): IDailyGoal[];
+	ensureGoalsForDate(date: Date): void;
 	addValueToGoal(goalId: string, date: Date, increase: number): void;
 }
 
@@ -66,12 +67,17 @@ const dailyGoalsImpl = {
 	},
 
 	getGoals(date: Date): IDailyGoal[] {
-		// Same implementation as class version
+		const formattedDate = formatDateToYYYYMMDD(date);
+		const goalDateRecords = dailyGoalsState.goals[formattedDate] ?? {};
+		return Object.values(goalDateRecords);
+	},
+
+	ensureGoalsForDate(date: Date): void {
 		const formattedDate = formatDateToYYYYMMDD(date);
 		let goalDateRecords = dailyGoalsState.goals[formattedDate] ?? {};
 
 		const activeSetups = getActiveGoalSetups(date);
-		logger?.info(`Daily Goals: Getting goals, found ${activeSetups.length} for today.`);
+		logger?.info(`Daily Goals: Ensuring goals exist, found ${activeSetups.length} for today.`);
 
 		for (const setup of activeSetups) {
 			if (!(setup.id in goalDateRecords)) {
@@ -86,8 +92,6 @@ const dailyGoalsImpl = {
 				}
 			}
 		}
-
-		return Object.values(goalDateRecords);
 	},
 
 	addValueToGoal(goalId: string, date: Date, increase: number) {

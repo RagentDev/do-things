@@ -4,10 +4,10 @@
 	import type { IDailyGoal, IDailyGoalSetup, IDaysActive } from '$lib/types';
 
 	// State for the form
-	let goalName = '';
-	let goalIcon = 'fa:FaRunning';
-	let requiredAmount = 1;
-	let startDate = dateFns.format(new Date(), 'yyyy-MM-dd');
+	let goalName = $state('');
+	let goalIcon = $state('fa:FaRunning');
+	let requiredAmount = $state(1);
+	let startDate = $state(dateFns.format(new Date(), 'yyyy-MM-dd'));
 
 	// Days active state
 	let daysActive: IDaysActive = {
@@ -21,13 +21,11 @@
 	};
 
 	// State for displaying goals
-	let displayDate = new Date();
-	let currentGoals: IDailyGoal[] = [];
-
-	// Load goals whenever displayDate changes
-	$: currentGoals = dailyGoals.getGoals(displayDate);
+	let displayDate = $state(new Date());
+	let currentGoals = $derived(dailyGoals.getGoals(displayDate));
 
 	function handleSubmit() {
+		// TODO: Create helper function for this in the rune
 		const newGoalSetup: IDailyGoalSetup = {
 			id: Date.now().toString(), // Simple ID generation
 			name: goalName,
@@ -38,7 +36,6 @@
 		};
 
 		dailyGoals.addGoalSetup(newGoalSetup);
-		currentGoals = dailyGoals.getGoals(displayDate);
 
 		// Reset form
 		goalName = '';
@@ -59,6 +56,7 @@
 	function changeDate(days: number) {
 		displayDate = new Date(displayDate);
 		displayDate.setDate(displayDate.getDate() + days);
+		dailyGoals.ensureGoalsForDate(displayDate);
 	}
 
 	function isDayActive(day: string, frequency: IDaysActive): boolean {
@@ -126,7 +124,7 @@
 
 	<div class="card">
 		<h2>Create New Goal</h2>
-		<form on:submit|preventDefault={handleSubmit}>
+		<form onsubmit={handleSubmit}>
 			<div class="form-group">
 				<label for="goalName">Goal Name</label>
 				<input id="goalName" type="text" bind:value={goalName} required />
@@ -179,9 +177,9 @@
 
 	<div class="card">
 		<div class="date-navigator">
-			<button on:click={() => changeDate(-1)} class="btn">← Previous Day</button>
+			<button onclick={() => changeDate(-1)} class="btn">← Previous Day</button>
 			<h2>{displayDate.toLocaleDateString()} ({getDayNameForDate(displayDate)})</h2>
-			<button on:click={() => changeDate(1)} class="btn">Next Day →</button>
+			<button onclick={() => changeDate(1)} class="btn">Next Day →</button>
 		</div>
 
 		<h3>Goals for this date</h3>
@@ -233,7 +231,7 @@
 							<div class="goal-controls">
 								<button
 									class="btn control-btn decrease"
-									on:click={() => decreaseGoalValue(goal.goalSetupId)}
+									onclick={() => decreaseGoalValue(goal.goalSetupId)}
 									disabled={goal.currentAmount <= 0}
 									title="Decrease by 1"
 								>
@@ -242,7 +240,7 @@
 								<span class="current-value">{goal.currentAmount}</span>
 								<button
 									class="btn control-btn increase"
-									on:click={() => increaseGoalValue(goal.goalSetupId)}
+									onclick={() => increaseGoalValue(goal.goalSetupId)}
 									title="Increase by 1"
 								>
 									+
@@ -286,7 +284,7 @@
 				</ul>
 			{/if}
 		</div>
-		<button on:click={resetStore} class="btn danger">Reset Store</button>
+		<button onclick={resetStore} class="btn danger">Reset Store</button>
 	</div>
 </div>
 
