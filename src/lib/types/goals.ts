@@ -1,4 +1,4 @@
-﻿interface IDaysActive {
+﻿export interface IDaysActive {
 	monday: boolean;
 	tuesday: boolean;
 	wednesday: boolean;
@@ -8,7 +8,7 @@
 	sunday: boolean;
 }
 
-interface IDailyGoalSetup {
+export interface IDailyGoalSetup {
 	id: string;
 	name: string;
 	icon: string;
@@ -17,7 +17,7 @@ interface IDailyGoalSetup {
 	startDate: Date;
 }
 
-interface IDailyGoal {
+export interface IDailyGoal {
 	goalSetupId: string;
 	name: string;
 	icon: string;

@@ -1,1 +1,1 @@
-﻿export * from './goals';
+﻿export * from '$lib/types/goals';

@@ -1,12 +1,7 @@
 ﻿<script lang="ts">
-	import { onMount } from 'svelte';
 	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
 	import * as dateFns from 'date-fns';
-
-	// Initialize persistence when component mounts
-	onMount(() => {
-		dailyGoals.initialize();
-	});
+	import type { IDailyGoal, IDailyGoalSetup, IDaysActive } from '$lib/types';
 
 	// State for the form
 	let goalName = '';
@@ -341,27 +336,6 @@
 		border: 1px solid #ddd;
 		border-radius: 4px;
 		font-size: 16px;
-	}
-
-	.days-selector {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-	}
-
-	.day-checkbox {
-		display: flex;
-		align-items: center;
-	}
-
-	.day-checkbox input {
-		width: auto;
-		margin-right: 5px;
-	}
-
-	.day-checkbox label {
-		margin: 0;
-		font-weight: normal;
 	}
 
 	.btn {

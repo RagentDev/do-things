@@ -1,4 +1,4 @@
-﻿<script>
+﻿<script lang="ts">
 	import { onMount } from 'svelte';
 
 	let shrinkingEnabled = true;
@@ -9,7 +9,7 @@
 
 	// Fixed the content items creation
 	let contentItems = Array(20)
-		.fill()
+		.fill(undefined, undefined, undefined)
 		.map((_, i) => ({
 			id: i, // Add proper id for each key
 			text: `Item ${i + 1}`

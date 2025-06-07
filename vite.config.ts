@@ -2,15 +2,15 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint2';
 import tailwindcss from '@tailwindcss/vite';
-
+import { svelteCheckPlugin } from './vite-plugin-svelte-check';
 export default defineConfig({
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
+		svelteCheckPlugin(),
 		eslint({
-			// Specify these options to ensure Prettier errors are included
 			include: ['src/**/*.{js,ts,jsx,tsx,svelte}'],
-			cache: false, // Disabling cache can help during setup to ensure rules are always fresh
+			cache: false,
 			emitWarning: true,
 			emitError: true
 		})
