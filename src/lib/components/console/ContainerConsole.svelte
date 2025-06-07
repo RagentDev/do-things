@@ -1,8 +1,12 @@
 ﻿<script lang="ts">
 	import { logger } from '$lib/runes/loggerRunes.svelte';
-	import type { Position } from '$lib/types';
 	import ContainerConsoleLogs from '$lib/components/console/ContainerConsoleLogs.svelte';
 	import ContainerConsoleHeader from '$lib/components/console/ContainerConsoleHeader.svelte';
+
+	interface Position {
+		x: number;
+		y: number;
+	}
 
 	let { isVisible = $bindable() } = $props<{ isVisible: boolean }>();
 	let isDragging = $state<boolean>(false);
