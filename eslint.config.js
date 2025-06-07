@@ -24,7 +24,8 @@ export default ts.config(
 		rules: {
 			'no-undef': 'off',
 			'svelte/require-each-key': 'off',
-			// 'svelte/valid-compile': 'error',
+			'svelte/valid-compile': 'error',
+			// 'svelte/no-unused-props': 'warn',
 			'svelte/block-lang': ['error', { script: ['ts'] }]
 		}
 	},

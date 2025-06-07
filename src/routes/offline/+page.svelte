@@ -1,4 +1,4 @@
-﻿<script>
+﻿<script lang="ts">
 	// Offline page
 </script>
 

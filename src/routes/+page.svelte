@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	// Any component logic can go here
 </script>
 
