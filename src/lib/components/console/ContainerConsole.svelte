@@ -80,7 +80,7 @@
 	export { isVisible };
 </script>
 
-{#if isVisible && logger}
+{#if isVisible}
 	<div
 		class="fixed bg-white border border-black rounded-lg z-[10000] flex flex-col font-mono text-xs"
 		style="left: {position.x}px; top: {position.y}px; width: {size.width}px; height: {size.height}px;"

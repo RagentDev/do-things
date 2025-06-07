@@ -23,3 +23,6 @@ jobs:
 
       - name: Run ESLint
         run: npx eslint "src"
+
+      - name: Run Svelte Check
+        run: npx svelte-check
