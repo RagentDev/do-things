@@ -119,7 +119,7 @@
 	}
 </script>
 
-<div class="container">
+<div class="container bg-primary">
 	<h1>Daily Goals Test Page</h1>
 
 	<div class="card">
