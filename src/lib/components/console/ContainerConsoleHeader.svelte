@@ -1,15 +1,6 @@
 ﻿<script lang="ts">
 	import { logger } from '$lib/runes/loggerRunes.svelte';
 	import MrIcon from '$lib/components/common/MrIcon.svelte';
-	import {
-		mdiArrowDownBox,
-		mdiClose,
-		mdiLock,
-		mdiMouseScrollWheel,
-		mdiPauseBox,
-		mdiPlayBox,
-		mdiTrashCan
-	} from '@mdi/js';
 	import MrButton from '$lib/components/common/MrButton.svelte';
 
 	interface Props {
@@ -54,24 +45,24 @@
 		<div class="flex gap-1">
 			<MrButton variant="text" icon onclick={() => logger?.toggle()}>
 				<MrIcon
-					path={isPlaying ? mdiPauseBox : mdiPlayBox}
+					icon={isPlaying ? 'mdi-pause-box' : 'mdi-play-box'}
 					class={isPlaying ? 'text-primary' : 'text-error'}
 				/>
 			</MrButton>
 			<MrButton variant="text" icon onclick={() => logger?.clear()}>
-				<MrIcon path={mdiTrashCan} class="text-gray-400" />
+				<MrIcon icon="mdi-trash-can" class="text-gray-400" />
 			</MrButton>
 			<MrButton variant="text" icon onclick={onToggleAutoScroll}>
 				<MrIcon
-					path={autoScroll ? mdiMouseScrollWheel : mdiLock}
+					icon={autoScroll ? 'mdi-mouse-scroll-wheel' : 'mdi-lock'}
 					class={autoScroll ? 'text-primary' : 'text-error'}
 				/>
 			</MrButton>
 			<MrButton variant="text" icon onclick={scrollToBottom}>
-				<MrIcon path={mdiArrowDownBox} class="text-primary" />
+				<MrIcon icon="mdi-arrow-down-box" class="text-primary" />
 			</MrButton>
 			<MrButton variant="text" icon color="error" onclick={onClose} class="ml-5">
-				<MrIcon path={mdiClose} class="text-error" />
+				<MrIcon icon="mdi-close" class="text-error" />
 			</MrButton>
 		</div>
 	</div>

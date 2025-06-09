@@ -1,16 +1,17 @@
 ﻿<script lang="ts">
 	import type { HTMLButtonAttributes } from 'svelte/elements';
+	import { getIconByName } from '$lib/utils/iconRegistry';
 
 	interface $$Props extends HTMLButtonAttributes {
 		class?: string;
-		path: string;
+		icon: string;
 		size?: 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
 	}
 
 	let className: string = '';
 	export { className as class };
 
-	export let path: $$Props['path'] = '';
+	export let icon: $$Props['icon'] = 'mdi-help-circle';
 	export let size: $$Props['size'] = 'medium';
 
 	function getSizeValue(size: $$Props['size']): number {
@@ -29,5 +30,5 @@
 </script>
 
 <svg width={sizeValue} height={sizeValue} viewBox="0 0 24 24" fill="currentColor" class={className}>
-	<path d={path} />
+	<path d="{getIconByName(icon)};" />
 </svg>

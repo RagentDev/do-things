@@ -1,5 +1,4 @@
 ﻿<script lang="ts">
-	import { mdiHeart, mdiContentSave, mdiDelete, mdiPlus, mdiDownload, mdiShare } from '@mdi/js';
 	import MrButton from '$lib/components/common/MrButton.svelte';
 	import MrIcon from '$lib/components/common/MrIcon.svelte';
 
@@ -60,7 +59,7 @@
 					<div class="flex gap-4 items-center flex-wrap">
 						{#each sizes as size}
 							<MrButton {variant} {size} icon>
-								<MrIcon path={mdiHeart} class="text-secondary" {size} />
+								<MrIcon icon="mdi-heart" class="text-secondary" {size} />
 							</MrButton>
 						{/each}
 					</div>
@@ -79,7 +78,7 @@
 					<div class="flex gap-4 items-center flex-wrap">
 						{#each sizes as size}
 							<MrButton {variant} {size}>
-								<MrIcon path={mdiContentSave} class="mr-2" {size} />
+								<MrIcon icon="mdi-content-save" class="mr-2" {size} />
 								Save
 							</MrButton>
 						{/each}
@@ -100,7 +99,7 @@
 						{#each sizes as size}
 							<MrButton {variant} {size}>
 								Download
-								<MrIcon path={mdiDownload} class="ml-2" {size} />
+								<MrIcon icon="mdi-download" class="ml-2" {size} />
 							</MrButton>
 						{/each}
 					</div>
@@ -118,11 +117,11 @@
 					<MrButton {variant} disabled>{variant} disabled</MrButton>
 
 					<MrButton {variant} disabled class="!p-2 rounded-full aspect-square">
-						<MrIcon path={mdiHeart} class="text-current" />
+						<MrIcon icon="mdi-heart" class="text-current" />
 					</MrButton>
 
 					<MrButton {variant} disabled>
-						<MrIcon path={mdiShare} class="mr-2" />
+						<MrIcon icon="mdi-share" class="mr-2" />
 						Share
 					</MrButton>
 				</div>
@@ -139,17 +138,17 @@
 				<h3 class="text-white text-lg font-medium">Action Buttons</h3>
 				<div class="flex gap-4 flex-wrap">
 					<MrButton variant="filled">
-						<MrIcon path={mdiPlus} class="mr-2" />
+						<MrIcon icon="mdi-plus" class="mr-2" />
 						Create New
 					</MrButton>
 
 					<MrButton variant="outlined">
-						<MrIcon path={mdiContentSave} class="mr-2" />
+						<MrIcon icon="mdi-content-save" class="mr-2" />
 						Save Draft
 					</MrButton>
 
 					<MrButton variant="text">
-						<MrIcon path={mdiDelete} class="mr-2" />
+						<MrIcon icon="mdi-delete" class="mr-2" />
 						Delete
 					</MrButton>
 				</div>
@@ -160,15 +159,15 @@
 				<h3 class="text-white text-lg font-medium">Icon Only Buttons</h3>
 				<div class="flex gap-4 flex-wrap">
 					<MrButton variant="filled" class="!p-3 rounded-full">
-						<MrIcon path={mdiHeart} class="text-current" />
+						<MrIcon icon="mdi-heart" class="text-current" />
 					</MrButton>
 
 					<MrButton variant="outlined" class="!p-3 rounded-full">
-						<MrIcon path={mdiShare} class="text-current" />
+						<MrIcon icon="mdi-share" class="text-current" />
 					</MrButton>
 
 					<MrButton variant="text" class="!p-3 rounded-full">
-						<MrIcon path={mdiDownload} class="text-current" />
+						<MrIcon icon="mdi-download" class="text-current" />
 					</MrButton>
 				</div>
 			</div>
@@ -178,27 +177,27 @@
 				<h3 class="text-white text-lg font-medium">Size Variations</h3>
 				<div class="flex gap-4 items-center flex-wrap">
 					<MrButton size="extra-small">
-						<MrIcon path={mdiPlus} class="mr-1" />
+						<MrIcon icon="mdi-plus" class="mr-1" />
 						Add
 					</MrButton>
 
 					<MrButton size="small">
-						<MrIcon path={mdiContentSave} class="mr-2" />
+						<MrIcon icon="mdi-content-save" class="mr-2" />
 						Save
 					</MrButton>
 
 					<MrButton size="medium">
-						<MrIcon path={mdiDownload} class="mr-2" />
+						<MrIcon icon="mdi-download" class="mr-2" />
 						Download
 					</MrButton>
 
 					<MrButton size="large">
-						<MrIcon path={mdiShare} class="mr-2" />
+						<MrIcon icon="mdi-share" class="mr-2" />
 						Share File
 					</MrButton>
 
 					<MrButton size="extra-large">
-						<MrIcon path={mdiHeart} class="mr-3" />
+						<MrIcon icon="mdi-heart" class="mr-3" />
 						Add to Favorites
 					</MrButton>
 				</div>

@@ -2,7 +2,6 @@
 	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
 	import * as dateFns from 'date-fns';
 	import type { IDailyGoal, IDailyGoalSetup, IDaysActive } from '$lib/types';
-	import { getIconByName } from '$lib/utils/iconRegistry';
 	import MrIcon from '$lib/components/common/MrIcon.svelte';
 
 	// State for the form
@@ -196,7 +195,7 @@
 							: ''} {isGoalCompleted(goal) ? 'completed' : ''}"
 					>
 						<div class="goal-icon">
-							<MrIcon path={getIconByName(goal.icon)} size="medium" />
+							<MrIcon icon={goal.icon} size="medium" />
 						</div>
 						<div class="goal-details">
 							<h4>{goal.name}</h4>
