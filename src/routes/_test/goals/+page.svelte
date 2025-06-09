@@ -2,10 +2,12 @@
 	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
 	import * as dateFns from 'date-fns';
 	import type { IDailyGoal, IDailyGoalSetup, IDaysActive } from '$lib/types';
+	import { getIconByName } from '$lib/utils/iconRegistry';
+	import MrIcon from '$lib/components/common/MrIcon.svelte';
 
 	// State for the form
 	let goalName = $state('');
-	let goalIcon = $state('fa:FaRunning');
+	let goalIcon = $state('mdi-run');
 	let requiredAmount = $state(1);
 	let startDate = $state(dateFns.format(new Date(), 'yyyy-MM-dd'));
 
@@ -81,11 +83,11 @@
 
 	// Icons for selection
 	const iconOptions = [
-		{ value: 'fa:FaRunning', label: 'Running' },
-		{ value: 'fa:FaWater', label: 'Water' },
-		{ value: 'fa:FaBook', label: 'Reading' },
-		{ value: 'fa:FaDumbbell', label: 'Exercise' },
-		{ value: 'fa:FaMeditation', label: 'Meditation' }
+		{ value: 'mdi-run', label: 'Running' },
+		{ value: 'mdi-water', label: 'Water' },
+		{ value: 'mdi-book-open', label: 'Reading' },
+		{ value: 'mdi-dumbbell', label: 'Exercise' },
+		{ value: 'mdi-meditation', label: 'Meditation' }
 	];
 
 	// Day labels
@@ -119,7 +121,7 @@
 	}
 </script>
 
-<div class="container bg-primary">
+<div class="container">
 	<h1>Daily Goals Test Page</h1>
 
 	<div class="card">
@@ -194,7 +196,7 @@
 							: ''} {isGoalCompleted(goal) ? 'completed' : ''}"
 					>
 						<div class="goal-icon">
-							<span>{goal.icon}</span>
+							<MrIcon path={getIconByName(goal.icon)} size="medium" />
 						</div>
 						<div class="goal-details">
 							<h4>{goal.name}</h4>
