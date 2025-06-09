@@ -43,34 +43,39 @@
 	}
 
 	function getVariantClasses(variant: $$Props['variant'], color: $$Props['color']): string {
-		const classMap = {
-			'primary-filled': 'bg-primary hover:bg-primary/80 text-white',
-			'primary-outlined':
-				'border-2 border-primary text-primary hover:bg-primary hover:text-white',
-			'primary-text': 'text-primary hover:bg-primary/10',
+		const colorKey = color || 'primary';
+		const variantKey = variant || 'filled';
 
-			'secondary-filled': 'bg-secondary hover:bg-secondary/80 text-white',
-			'secondary-outlined':
-				'border-2 border-secondary text-secondary hover:bg-secondary hover:text-white',
-			'secondary-text': 'text-secondary hover:bg-secondary/10',
-
-			'success-filled': 'bg-success hover:bg-success/80 text-white',
-			'success-outlined':
-				'border-2 border-success text-success hover:bg-success/80 hover:text-white',
-			'success-text': 'text-success hover:bg-success/10',
-
-			'warning-filled': 'bg-warning hover:bg-warning/80 text-white',
-			'warning-outlined':
-				'border-2 border-warning text-warning hover:bg-warning/80 hover:text-white',
-			'warning-text': 'text-warning hover:bg-warning/10',
-
-			'error-filled': 'bg-error hover:bg-error/80 text-white',
-			'error-outlined': 'border-2 border-error text-error hover:bg-error/80 hover:text-white',
-			'error-text': 'text-error hover:bg-error/10'
+		const classes = {
+			filled: {
+				primary: 'bg-primary hover:bg-primary/80 disabled:hover:bg-primary text-white',
+				secondary:
+					'bg-secondary hover:bg-secondary/80 disabled:hover:bg-secondary text-white',
+				success: 'bg-success hover:bg-success/80 disabled:hover:bg-success text-white',
+				warning: 'bg-warning hover:bg-warning/80 disabled:hover:bg-warning text-white',
+				error: 'bg-error hover:bg-error/80 disabled:hover:bg-error text-white'
+			},
+			outlined: {
+				primary:
+					'border-2 border-primary text-primary hover:bg-primary hover:text-white disabled:hover:bg-transparent disabled:hover:text-primary',
+				secondary:
+					'border-2 border-secondary text-secondary hover:bg-secondary hover:text-white disabled:hover:bg-transparent disabled:hover:text-secondary',
+				success:
+					'border-2 border-success text-success hover:bg-success hover:text-white disabled:hover:bg-transparent disabled:hover:text-success',
+				warning:
+					'border-2 border-warning text-warning hover:bg-warning hover:text-white disabled:hover:bg-transparent disabled:hover:text-warning',
+				error: 'border-2 border-error text-error hover:bg-error hover:text-white disabled:hover:bg-transparent disabled:hover:text-error'
+			},
+			text: {
+				primary: 'text-primary hover:bg-primary/10 disabled:hover:bg-transparent',
+				secondary: 'text-secondary hover:bg-secondary/10 disabled:hover:bg-transparent',
+				success: 'text-success hover:bg-success/10 disabled:hover:bg-transparent',
+				warning: 'text-warning hover:bg-warning/10 disabled:hover:bg-transparent',
+				error: 'text-error hover:bg-error/10 disabled:hover:bg-transparent'
+			}
 		} as const;
 
-		const key = `${color || 'primary'}-${variant || 'filled'}` as keyof typeof classMap;
-		return classMap[key];
+		return classes[variantKey][colorKey];
 	}
 
 	$: sizeClasses = getSizeClasses(size);
@@ -83,7 +88,7 @@
     ${icon ? 'rounded-full' : 'rounded-md'}
     transition-all duration-150
     active:scale-95
-    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-current
+    disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
     ${sizeClasses}
     ${variantClasses}
     ${className}
