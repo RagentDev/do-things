@@ -54,20 +54,19 @@
 				'border-2 border-secondary text-secondary hover:bg-secondary hover:text-white',
 			'secondary-text': 'text-secondary hover:bg-secondary/10',
 
-			'success-filled': 'bg-green-600 hover:bg-green-700 text-white',
+			'success-filled': 'bg-success hover:bg-success/80 text-white',
 			'success-outlined':
-				'border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white',
-			'success-text': 'text-green-600 hover:bg-green-50',
+				'border-2 border-success text-success hover:bg-success/80 hover:text-white',
+			'success-text': 'text-success hover:bg-success/10',
 
-			'warning-filled': 'bg-yellow-600 hover:bg-yellow-700 text-white',
+			'warning-filled': 'bg-warning hover:bg-warning/80 text-white',
 			'warning-outlined':
-				'border-2 border-yellow-600 text-yellow-600 hover:bg-yellow-600 hover:text-white',
-			'warning-text': 'text-yellow-600 hover:bg-yellow-50',
+				'border-2 border-warning text-warning hover:bg-warning/80 hover:text-white',
+			'warning-text': 'text-warning hover:bg-warning/10',
 
-			'error-filled': 'bg-red-600 hover:bg-red-700 text-white',
-			'error-outlined':
-				'border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white',
-			'error-text': 'text-red-600 hover:bg-red-50'
+			'error-filled': 'bg-error hover:bg-error/80 text-white',
+			'error-outlined': 'border-2 border-error text-error hover:bg-error/80 hover:text-white',
+			'error-text': 'text-error hover:bg-error/10'
 		} as const;
 
 		const key = `${color || 'primary'}-${variant || 'filled'}` as keyof typeof classMap;
@@ -83,7 +82,7 @@
     font-medium
     ${icon ? 'rounded-full' : 'rounded-md'}
     transition-all duration-150
-    active:scale-95 active:shadow-sm
+    active:scale-95
     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-current
     ${sizeClasses}
     ${variantClasses}

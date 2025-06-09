@@ -8,6 +8,9 @@
 	--color-background: #ffffff;
 	--color-surface: #f8fafc;
 	--color-accent: #10b981;
+    --color-success: #20c997;
+    --color-warning: #ffc600;
+    --color-error: #ff1e00;
 }
 
 /* Add to your existing CSS */

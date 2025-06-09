@@ -1,6 +1,5 @@
 ﻿<script lang="ts">
 	import { logger } from '$lib/runes/loggerRunes.svelte';
-	import ButtonConsole from '$lib/components/console/ButtonConsole.svelte';
 	import MrIcon from '$lib/components/common/MrIcon.svelte';
 	import {
 		mdiArrowDownBox,
@@ -11,6 +10,7 @@
 		mdiPlayBox,
 		mdiTrashCan
 	} from '@mdi/js';
+	import MrButton from '$lib/components/common/MrButton.svelte';
 
 	interface Props {
 		handleMouseDown: (e: MouseEvent) => void;
@@ -44,7 +44,7 @@
 
 {#if logger}
 	<div
-		class="bg-gray-100 border-b border-black cursor-move flex justify-between items-center rounded-t-lg"
+		class="bg-gray-100 border-b border-black cursor-move flex justify-between items-center rounded-t-lg py-1"
 		onmousedown={handleMouseDown}
 		onkeydown={handleKeyDown}
 		role="button"
@@ -52,27 +52,27 @@
 	>
 		<span class="pl-2 font-bold text-gray-800">Custom Console ({logCount})</span>
 		<div class="flex gap-1">
-			<ButtonConsole onclick={() => logger?.toggle()} class="p-1 px-2">
+			<MrButton variant="text" icon onclick={() => logger?.toggle()}>
 				<MrIcon
 					path={isPlaying ? mdiPauseBox : mdiPlayBox}
-					class={isPlaying ? 'text-blue-400' : 'text-red-400'}
+					class={isPlaying ? 'text-primary' : 'text-error'}
 				/>
-			</ButtonConsole>
-			<ButtonConsole onclick={() => logger?.clear()} class="py-1 px-2">
+			</MrButton>
+			<MrButton variant="text" icon onclick={() => logger?.clear()}>
 				<MrIcon path={mdiTrashCan} class="text-gray-400" />
-			</ButtonConsole>
-			<ButtonConsole onclick={onToggleAutoScroll} class="p-1 px-2">
+			</MrButton>
+			<MrButton variant="text" icon onclick={onToggleAutoScroll}>
 				<MrIcon
 					path={autoScroll ? mdiMouseScrollWheel : mdiLock}
-					class={autoScroll ? 'text-blue-400' : 'text-red-400'}
+					class={autoScroll ? 'text-primary' : 'text-error'}
 				/>
-			</ButtonConsole>
-			<ButtonConsole onclick={scrollToBottom} class="p-1 px-2">
-				<MrIcon path={mdiArrowDownBox} class="text-blue-400" />
-			</ButtonConsole>
-			<ButtonConsole onclick={onClose} class="p-2">
-				<MrIcon path={mdiClose} class="text-gray-600" />
-			</ButtonConsole>
+			</MrButton>
+			<MrButton variant="text" icon onclick={scrollToBottom}>
+				<MrIcon path={mdiArrowDownBox} class="text-primary" />
+			</MrButton>
+			<MrButton variant="text" icon color="error" onclick={onClose} class="ml-5">
+				<MrIcon path={mdiClose} class="text-error" />
+			</MrButton>
 		</div>
 	</div>
 {/if}
