@@ -2,6 +2,7 @@
 	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
 	import type { IDailyGoal, IDaysActive } from '$lib/types';
 	import MrIcon from '$lib/components/common/MrIcon.svelte';
+	import MrButton from '$lib/components/common/MrButton.svelte';
 
 	// State for displaying goals
 	let displayDate = $state(new Date());
@@ -58,27 +59,32 @@
 	}
 </script>
 
-<div class="container">
-	<div class="card">
-		<div class="date-navigator">
-			<button onclick={() => changeDate(-1)} class="btn">← Previous Day</button>
-			<h2>{displayDate.toLocaleDateString()} ({getDayNameForDate(displayDate)})</h2>
-			<button onclick={() => changeDate(1)} class="btn">Next Day →</button>
+<div class="w-5/6 m-auto p-4">
+	<div>
+		<div class="flex items-center justify-between mb-4">
+			<MrButton onclick={() => changeDate(-1)}>← Previous Day</MrButton>
+			<span class="text-white">
+				{displayDate.toLocaleDateString()} ({getDayNameForDate(displayDate)})
+			</span>
+			<MrButton onclick={() => changeDate(1)}>Next Day →</MrButton>
 		</div>
 
-		<h3>Goals for this date</h3>
 		{#if currentGoals.length === 0}
-			<p class="empty-state">No goals found for this date.</p>
+			<span class="text-white">No goals found for this date.</span>
 		{:else}
-			<div class="goals-list">
+			<div class="grid gap-2">
 				{#each currentGoals as goal}
 					<div
-						class="goal-item {!isGoalActiveForToday(goal)
-							? 'inactive'
-							: ''} {isGoalCompleted(goal) ? 'completed' : ''}"
+						class="flex items-center p-2.5 border rounded-md transition-all duration-200 ease-in-out {!isGoalActiveForToday(
+							goal
+						)
+							? 'opacity-60 border-gray-200 bg-gray-50'
+							: isGoalCompleted(goal)
+								? 'border-green-500 bg-green-50'
+								: 'border-gray-200 bg-gray-50'}"
 					>
-						<div class="goal-icon">
-							<MrIcon icon={goal.icon} size="medium" />
+						<div class="w-10 h-10 flex items-center justify-center mr-4 text-blue-500">
+							<MrIcon icon={goal.icon} size="extra-large" />
 						</div>
 						<div class="goal-details">
 							<h4>{goal.name}</h4>
@@ -139,31 +145,8 @@
 </div>
 
 <style>
-	.container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 20px;
-		font-family:
-			system-ui,
-			-apple-system,
-			BlinkMacSystemFont,
-			'Segoe UI',
-			Roboto,
-			sans-serif;
-	}
-
-	h2,
-	h3,
 	h4 {
 		color: #333;
-	}
-
-	.card {
-		background: #fff;
-		border-radius: 8px;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-		padding: 20px;
-		margin-bottom: 20px;
 	}
 
 	.btn {
@@ -174,41 +157,6 @@
 		cursor: pointer;
 		font-size: 14px;
 		margin-right: 5px;
-	}
-
-	.date-navigator {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-bottom: 15px;
-	}
-
-	.goals-list {
-		display: grid;
-		gap: 15px;
-	}
-
-	.goal-item {
-		display: flex;
-		align-items: center;
-		padding: 10px;
-		border: 1px solid #eee;
-		border-radius: 6px;
-		background: #f9f9f9;
-	}
-
-	.goal-item.inactive {
-		opacity: 0.6;
-	}
-
-	.goal-icon {
-		width: 40px;
-		height: 40px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin-right: 15px;
-		color: #4a7bff;
 	}
 
 	.goal-details {
@@ -265,32 +213,6 @@
 		font-size: 12px;
 		color: #f44336;
 		font-style: italic;
-	}
-
-	.empty-state {
-		color: #888;
-		font-style: italic;
-		text-align: center;
-		margin: 20px 0;
-	}
-
-	.goal-item {
-		display: flex;
-		align-items: center;
-		padding: 10px;
-		border: 1px solid #eee;
-		border-radius: 6px;
-		background: #f9f9f9;
-		transition: all 0.2s ease;
-	}
-
-	.goal-item.inactive {
-		opacity: 0.6;
-	}
-
-	.goal-item.completed {
-		border-color: #4caf50;
-		background: #f1f8e9;
 	}
 
 	.goal-controls {
@@ -368,11 +290,6 @@
 
 	/* Responsive adjustments */
 	@media (max-width: 600px) {
-		.goal-item {
-			flex-direction: column;
-			align-items: flex-start;
-		}
-
 		.goal-controls {
 			margin-left: 0;
 			margin-top: 10px;
