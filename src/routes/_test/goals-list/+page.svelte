@@ -78,63 +78,75 @@
 						class="flex items-center p-2.5 border rounded-md transition-all duration-200 ease-in-out {!isGoalActiveForToday(
 							goal
 						)
-							? 'opacity-60 border-gray-200 bg-gray-50'
+							? 'opacity-60 border-gray-200/50 bg-gray-50/50'
 							: isGoalCompleted(goal)
-								? 'border-green-500 bg-green-50'
-								: 'border-gray-200 bg-gray-50'}"
+								? 'border-green-500/50 bg-green-50/50'
+								: 'border-gray-200/50 bg-gray-50/50'}"
 					>
 						<div class="w-10 h-10 flex items-center justify-center mr-4 text-blue-500">
 							<MrIcon icon={goal.icon} size="extra-large" />
 						</div>
-						<div class="goal-details">
-							<h4>{goal.name}</h4>
-							<div class="active-days">
+						<div class="flex-1">
+							<span>{goal.name}</span>
+							<div class="flex gap-1 mb-2">
 								{#each dayLabels as day}
 									<span
-										class="day-indicator {isDayActive(day.key, goal.frequency)
-											? 'active'
-											: 'inactive'}"
+										class="text-[10px] px-1 py-0.5 rounded-sm {isDayActive(
+											day.key,
+											goal.frequency
+										)
+											? 'bg-green-100 text-green-800'
+											: 'bg-gray-100 text-gray-500'}"
 									>
 										{day.label}
 									</span>
 								{/each}
 							</div>
-							<div class="progress-container">
+							<div class="w-full h-2 bg-gray-200 rounded overflow-hidden mb-2">
 								<div
-									class="progress-bar {isGoalCompleted(goal) ? 'completed' : ''}"
+									class="h-full transition-all duration-300 ease-in-out {isGoalCompleted(
+										goal
+									)
+										? 'bg-green-500'
+										: 'bg-blue-500'}"
 									style="width: {getCompletionPercentage(goal)}%"
 								></div>
 							</div>
-							<div class="progress-text">
-								{goal.currentAmount} / {goal.maxAmount}
+							<div class="flex">
+								<span class="text-gray-500">
+									{goal.currentAmount} / {goal.maxAmount}
+								</span>
 								{#if isGoalCompleted(goal)}
-									<span class="completion-badge">✅ Completed!</span>
+									<div class="ml-2 flex items-center text-success">
+										<MrIcon icon="mdi-checkbox-marked" size="small" />
+									</div>
+									<span>Completed</span>
 								{/if}
 							</div>
 							{#if !isGoalActiveForToday(goal)}
-								<div class="inactive-notice">Not active today</div>
+								<div>Not active today</div>
 							{/if}
 						</div>
 
 						<!-- Add control buttons for active goals -->
 						{#if isGoalActiveForToday(goal)}
-							<div class="goal-controls">
-								<button
-									class="btn control-btn decrease"
+							<div class="flex items-center gap-2 ml-8 flex-shrink-0">
+								<MrButton
+									color="error"
+									icon
 									onclick={() => decreaseGoalValue(goal.goalSetupId)}
 									disabled={goal.currentAmount <= 0}
-									title="Decrease by 1"
 								>
-									−
-								</button>
-								<span class="current-value">{goal.currentAmount}</span>
-								<button
-									class="btn control-btn increase"
+									<MrIcon size="small" icon="mdi-minus" class="text-white" />
+								</MrButton>
+								<span class="w-8 text-center font-bold">{goal.currentAmount}</span>
+								<MrButton
+									color="success"
+									icon
 									onclick={() => increaseGoalValue(goal.goalSetupId)}
-									title="Increase by 1"
 								>
-									+
-								</button>
+									<MrIcon size="small" icon="mdi-plus" class="text-white" />
+								</MrButton>
 							</div>
 						{/if}
 					</div>
@@ -143,158 +155,3 @@
 		{/if}
 	</div>
 </div>
-
-<style>
-	h4 {
-		color: #333;
-	}
-
-	.btn {
-		background: #e0e0e0;
-		border: none;
-		padding: 10px 15px;
-		border-radius: 4px;
-		cursor: pointer;
-		font-size: 14px;
-		margin-right: 5px;
-	}
-
-	.goal-details {
-		flex: 1;
-	}
-
-	.goal-details h4 {
-		margin: 0 0 5px 0;
-	}
-
-	.active-days {
-		display: flex;
-		gap: 5px;
-		margin-bottom: 8px;
-	}
-
-	.day-indicator {
-		font-size: 10px;
-		padding: 2px 4px;
-		border-radius: 3px;
-		background: #f0f0f0;
-	}
-
-	.day-indicator.active {
-		background: #c8e6c9;
-		color: #2e7d32;
-	}
-
-	.day-indicator.inactive {
-		color: #9e9e9e;
-	}
-
-	.progress-container {
-		width: 100%;
-		height: 8px;
-		background: #eee;
-		border-radius: 4px;
-		overflow: hidden;
-		margin-bottom: 5px;
-	}
-
-	.progress-bar {
-		height: 100%;
-		background: #4a7bff;
-	}
-
-	.progress-text {
-		font-size: 12px;
-		color: #666;
-	}
-
-	.inactive-notice {
-		margin-top: 5px;
-		font-size: 12px;
-		color: #f44336;
-		font-style: italic;
-	}
-
-	.goal-controls {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		margin-left: 15px;
-		flex-shrink: 0;
-	}
-
-	.control-btn {
-		width: 32px;
-		height: 32px;
-		border-radius: 50%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		font-size: 18px;
-		font-weight: bold;
-		padding: 0;
-		margin: 0;
-		transition: all 0.2s ease;
-	}
-
-	.control-btn.increase {
-		background: #4caf50;
-		color: white;
-	}
-
-	.control-btn.increase:hover:not(:disabled) {
-		background: #45a049;
-		transform: scale(1.05);
-	}
-
-	.control-btn.decrease {
-		background: #f44336;
-		color: white;
-	}
-
-	.control-btn.decrease:hover:not(:disabled) {
-		background: #da190b;
-		transform: scale(1.05);
-	}
-
-	.control-btn:disabled {
-		opacity: 0.3;
-		cursor: not-allowed;
-		transform: none;
-	}
-
-	.current-value {
-		font-weight: bold;
-		font-size: 16px;
-		min-width: 30px;
-		text-align: center;
-		color: #333;
-	}
-
-	.progress-bar {
-		height: 100%;
-		background: #4a7bff;
-		transition: all 0.3s ease;
-	}
-
-	.progress-bar.completed {
-		background: #4caf50;
-	}
-
-	.completion-badge {
-		color: #4caf50;
-		font-weight: bold;
-		margin-left: 10px;
-		font-size: 14px;
-	}
-
-	/* Responsive adjustments */
-	@media (max-width: 600px) {
-		.goal-controls {
-			margin-left: 0;
-			margin-top: 10px;
-			align-self: stretch;
-			justify-content: center;
-		}
-	}
-</style>
