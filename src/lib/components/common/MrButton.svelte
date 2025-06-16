@@ -1,25 +1,29 @@
 ﻿<script lang="ts">
-	import type { HTMLButtonAttributes } from 'svelte/elements';
+	import type { Snippet } from 'svelte';
 
-	interface $$Props extends HTMLButtonAttributes {
+	interface Props {
 		class?: string;
 		variant?: 'filled' | 'outlined' | 'text';
 		size?: 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
 		color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 		icon?: boolean;
 		disabled?: boolean;
+		onclick?: () => void;
+		children: Snippet;
 	}
 
-	let className: string = '';
-	export { className as class };
+	let {
+		class: className = '',
+		variant = 'filled',
+		size = 'medium',
+		color = 'primary',
+		icon = false,
+		disabled = false,
+		onclick,
+		children
+	}: Props = $props();
 
-	export let variant: $$Props['variant'] = 'filled';
-	export let size: $$Props['size'] = 'medium';
-	export let color: $$Props['color'] = 'primary';
-	export let icon: $$Props['icon'] = false;
-	export let disabled: $$Props['disabled'] = false;
-
-	function getSizeClasses(size: $$Props['size']): string {
+	function getSizeClasses(size: Props['size']): string {
 		let sizeMap;
 		if (icon) {
 			sizeMap = {
@@ -42,7 +46,7 @@
 		return sizeMap[size || 'medium'];
 	}
 
-	function getVariantClasses(variant: $$Props['variant'], color: $$Props['color']): string {
+	function getVariantClasses(variant: Props['variant'], color: Props['color']): string {
 		const colorKey = color || 'primary';
 		const variantKey = variant || 'filled';
 
@@ -78,25 +82,24 @@
 		return classes[variantKey][colorKey];
 	}
 
-	$: sizeClasses = getSizeClasses(size);
-	$: variantClasses = getVariantClasses(variant, color);
-
-	$: baseClasses = `
-    inline-flex items-center justify-center
-    cursor-pointer
-    font-medium
-    ${icon ? 'rounded-full' : 'rounded-md'}
-    transition-all duration-150
-    active:scale-95
-    disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
-    ${sizeClasses}
-    ${variantClasses}
-    ${className}
-  `
-		.trim()
-		.replace(/\s+/g, ' ');
+	const baseClasses = $derived(
+		`
+		inline-flex items-center justify-center
+		cursor-pointer
+		font-medium
+		${icon ? 'rounded-full' : 'rounded-md'}
+		transition-all duration-150
+		active:scale-95
+		disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
+		${getSizeClasses(size)}
+		${getVariantClasses(variant, color)}
+		${className}
+	`
+			.trim()
+			.replace(/\s+/g, ' ')
+	);
 </script>
 
-<button class={baseClasses} {disabled} on:click {...$$restProps}>
-	<slot />
+<button class={baseClasses} {disabled} {onclick}>
+	{@render children()}
 </button>

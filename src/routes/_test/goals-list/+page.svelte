@@ -75,7 +75,7 @@
 			<div class="grid gap-2">
 				{#each currentGoals as goal}
 					<div
-						class="flex items-center p-2.5 border rounded-md transition-all duration-200 ease-in-out {!isGoalActiveForToday(
+						class="flex items-center p-2.5 border rounded-4xl transition-all duration-200 ease-in-out {!isGoalActiveForToday(
 							goal
 						)
 							? 'opacity-60 border-gray-200/50 bg-gray-50/50'
