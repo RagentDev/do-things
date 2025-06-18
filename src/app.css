@@ -8,13 +8,48 @@
 	--color-background: #ffffff;
 	--color-surface: #f8fafc;
 	--color-accent: #10b981;
-    --color-success: #20c997;
-    --color-warning: #ffc600;
-    --color-error: #ff1e00;
+	--color-success: #20c997;
+	--color-warning: #ffc600;
+	--color-error: #ff1e00;
+}
+
+@layer utilities {
+	.border-fade-top {
+		position: relative;
+		border-top: none;
+	}
+
+	.border-fade-top::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+	}
+
+	.border-fade-bottom {
+		position: relative;
+		border-bottom: none;
+	}
+
+	.border-fade-bottom::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+	}
 }
 
 /* Add to your existing CSS */
 :root {
+	--bg-top-primary: #4785ff;
+	--bg-bottom-primary: #7b4aff;
+
 	--sat: env(safe-area-inset-top);
 	--sab: env(safe-area-inset-bottom);
 	--sal: env(safe-area-inset-left);
@@ -40,6 +75,19 @@ body {
 	overscroll-behavior: none;
 }
 
+/*body {*/
+/*	background: linear-gradient(180deg, #4785ff, #7b4aff);*/
+/*}*/
+
 body {
-	background: linear-gradient(180deg, #4785ff, #7b4aff);
+	background:
+		radial-gradient(circle at 20% 80%, rgba(71, 133, 255, 0.8) 0%, transparent 50%),
+		radial-gradient(circle at 80% 20%, rgba(123, 74, 255, 0.8) 0%, transparent 50%),
+		radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.6) 0%, transparent 50%),
+		radial-gradient(circle at 60% 60%, rgba(255, 159, 67, 0.6) 0%, transparent 50%),
+		radial-gradient(circle at 90% 90%, rgba(72, 219, 251, 0.7) 0%, transparent 50%),
+		radial-gradient(circle at 10% 10%, rgba(162, 155, 254, 0.7) 0%, transparent 50%),
+		linear-gradient(135deg, var(--bg-top-primary) 0%, var(--bg-bottom-primary) 100%);
+	min-height: 100vh;
+	background-attachment: fixed;
 }

@@ -9,7 +9,7 @@
 		icon?: boolean;
 		disabled?: boolean;
 		onclick?: () => void;
-		children: Snippet;
+		children?: Snippet;
 	}
 
 	let {
@@ -90,7 +90,7 @@
 		${icon ? 'rounded-full' : 'rounded-md'}
 		transition-all duration-150
 		active:scale-95
-		disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100
+		disabled:opacity-50 disabled:saturate-50 disabled:cursor-not-allowed disabled:active:scale-100
 		${getSizeClasses(size)}
 		${getVariantClasses(variant, color)}
 		${className}
@@ -101,5 +101,7 @@
 </script>
 
 <button class={baseClasses} {disabled} {onclick}>
-	{@render children()}
+	{#if children}
+		{@render children()}
+	{/if}
 </button>

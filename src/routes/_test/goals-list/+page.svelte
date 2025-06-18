@@ -3,6 +3,7 @@
 	import type { IDailyGoal, IDaysActive } from '$lib/types';
 	import MrIcon from '$lib/components/common/MrIcon.svelte';
 	import MrButton from '$lib/components/common/MrButton.svelte';
+	import GlassCard from '$lib/components/common/GlassCard.svelte';
 
 	// State for displaying goals
 	let displayDate = $state(new Date());
@@ -74,82 +75,82 @@
 		{:else}
 			<div class="grid gap-2">
 				{#each currentGoals as goal}
-					<div
-						class="flex items-center p-2.5 border rounded-4xl transition-all duration-200 ease-in-out {!isGoalActiveForToday(
-							goal
-						)
-							? 'opacity-60 border-gray-200/50 bg-gray-50/50'
-							: isGoalCompleted(goal)
-								? 'border-green-500/50 bg-green-50/50'
-								: 'border-gray-200/50 bg-gray-50/50'}"
-					>
-						<div class="w-10 h-10 flex items-center justify-center mr-4 text-blue-500">
-							<MrIcon icon={goal.icon} size="extra-large" />
-						</div>
-						<div class="flex-1">
-							<span>{goal.name}</span>
-							<div class="flex gap-1 mb-2">
-								{#each dayLabels as day}
-									<span
-										class="text-[10px] px-1 py-0.5 rounded-sm {isDayActive(
-											day.key,
-											goal.frequency
+					<GlassCard>
+						<div
+							class="flex items-center p-2.5 transition-all duration-200 ease-in-out"
+						>
+							<div
+								class="w-10 h-10 flex items-center justify-center mr-4 text-blue-500"
+							>
+								<MrIcon icon={goal.icon} size="extra-large" />
+							</div>
+							<div class="flex-1">
+								<span>{goal.name}</span>
+								<div class="flex gap-1 mb-2">
+									{#each dayLabels as day}
+										<span
+											class="text-[10px] px-1 py-0.5 rounded-sm {isDayActive(
+												day.key,
+												goal.frequency
+											)
+												? 'bg-green-100 text-green-800'
+												: 'bg-gray-100 text-gray-500'}"
+										>
+											{day.label}
+										</span>
+									{/each}
+								</div>
+								<div class="w-full h-2 bg-gray-200 rounded overflow-hidden mb-2">
+									<div
+										class="h-full transition-all duration-300 ease-in-out {isGoalCompleted(
+											goal
 										)
-											? 'bg-green-100 text-green-800'
-											: 'bg-gray-100 text-gray-500'}"
-									>
-										{day.label}
+											? 'bg-green-500'
+											: 'bg-blue-500'}"
+										style="width: {getCompletionPercentage(goal)}%"
+									></div>
+								</div>
+								<div class="flex">
+									<span class="text-gray-500">
+										{goal.currentAmount} / {goal.maxAmount}
 									</span>
-								{/each}
-							</div>
-							<div class="w-full h-2 bg-gray-200 rounded overflow-hidden mb-2">
-								<div
-									class="h-full transition-all duration-300 ease-in-out {isGoalCompleted(
-										goal
-									)
-										? 'bg-green-500'
-										: 'bg-blue-500'}"
-									style="width: {getCompletionPercentage(goal)}%"
-								></div>
-							</div>
-							<div class="flex">
-								<span class="text-gray-500">
-									{goal.currentAmount} / {goal.maxAmount}
-								</span>
-								{#if isGoalCompleted(goal)}
-									<div class="ml-2 flex items-center text-success">
-										<MrIcon icon="mdi-checkbox-marked" size="small" />
-									</div>
-									<span>Completed</span>
+									{#if isGoalCompleted(goal)}
+										<div class="ml-2 flex items-center text-success">
+											<MrIcon icon="mdi-checkbox-marked" size="small" />
+										</div>
+										<span>Completed</span>
+									{/if}
+								</div>
+								{#if !isGoalActiveForToday(goal)}
+									<div>Not active today</div>
 								{/if}
 							</div>
-							{#if !isGoalActiveForToday(goal)}
-								<div>Not active today</div>
+
+							<!-- Add control buttons for active goals -->
+							{#if isGoalActiveForToday(goal)}
+								<div class="flex items-center gap-2 ml-8 flex-shrink-0">
+									<MrButton
+										color="error"
+										icon
+										onclick={() => decreaseGoalValue(goal.goalSetupId)}
+										disabled={goal.currentAmount <= 0}
+									>
+										<MrIcon size="small" icon="mdi-minus" class="text-white" />
+									</MrButton>
+									<span class="w-8 text-center font-bold"
+										>{goal.currentAmount}</span
+									>
+									<MrButton
+										color="success"
+										icon
+										onclick={() => increaseGoalValue(goal.goalSetupId)}
+									>
+										<MrIcon size="small" icon="mdi-plus" class="text-white" />
+									</MrButton>
+								</div>
 							{/if}
 						</div>
-
-						<!-- Add control buttons for active goals -->
-						{#if isGoalActiveForToday(goal)}
-							<div class="flex items-center gap-2 ml-8 flex-shrink-0">
-								<MrButton
-									color="error"
-									icon
-									onclick={() => decreaseGoalValue(goal.goalSetupId)}
-									disabled={goal.currentAmount <= 0}
-								>
-									<MrIcon size="small" icon="mdi-minus" class="text-white" />
-								</MrButton>
-								<span class="w-8 text-center font-bold">{goal.currentAmount}</span>
-								<MrButton
-									color="success"
-									icon
-									onclick={() => increaseGoalValue(goal.goalSetupId)}
-								>
-									<MrIcon size="small" icon="mdi-plus" class="text-white" />
-								</MrButton>
-							</div>
-						{/if}
-					</div>
+					</GlassCard>
 				{/each}
 			</div>
 		{/if}

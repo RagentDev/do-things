@@ -1,5 +1,5 @@
 ﻿<!-- $lib/components/TopBar.svelte -->
-<div class="relative bg-gray-500 w-full z-10">
+<div class="relative w-full z-10 border-fade-bottom border-white/20">
 	<div class="flex items-center justify-between px-4 h-14">
 		<!-- Left Side -->
 		<div class="flex items-center">
