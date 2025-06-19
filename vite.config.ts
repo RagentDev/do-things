@@ -1,11 +1,9 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint2';
-import tailwindcss from '@tailwindcss/vite';
 import { svelteCheckPlugin } from './vite-plugin-svelte-check';
 export default defineConfig({
 	plugins: [
-		tailwindcss(),
 		sveltekit(),
 		svelteCheckPlugin(),
 		eslint({
@@ -14,5 +12,10 @@ export default defineConfig({
 			emitWarning: true,
 			emitError: true
 		})
-	]
+	],
+	css: {
+		preprocessorOptions: {
+			scss: {}
+		}
+	}
 });

@@ -4,18 +4,18 @@
 </script>
 
 <!-- $lib/components/BottomBar.svelte -->
-<div class="flex items-center justify-center gap-4 h-16 border-fade-top border-white/20">
-	<MrButton class="active-icon" variant="text" color="secondary" size="extra-large" icon>
-		<MrIcon class="text-emerald-500" icon="mdi-home" size="extra-large" />
+<div class="flex items-center justify-center gap-4 border-fade-top" style="min-height: 120px">
+	<MrButton class="active-icon" variant="text" color="secondary" size="xl" icon>
+		<MrIcon class="text-success" icon="mdi-home" size="extra-large" />
 	</MrButton>
-	<MrButton variant="text" color="secondary" size="extra-large" icon disabled>
-		<MrIcon class="text-red-500" icon="mdi-list-box-outline" size="extra-large" />
+	<MrButton variant="text" color="secondary" size="xl" icon disabled>
+		<MrIcon class="text-success" icon="mdi-list-box-outline" size="extra-large" />
 	</MrButton>
-	<MrButton variant="text" color="secondary" size="extra-large" icon disabled>
-		<MrIcon class="text-purple-500" icon="mdi-plus" size="extra-large" />
+	<MrButton variant="text" color="secondary" size="xl" icon disabled>
+		<MrIcon class="text-success" icon="mdi-plus" size="extra-large" />
 	</MrButton>
-	<MrButton variant="text" color="secondary" size="extra-large" icon disabled>
-		<MrIcon class="text-orange-500" icon="mdi-account" size="extra-large" />
+	<MrButton variant="text" color="secondary" size="xl" icon disabled>
+		<MrIcon class="text-success" icon="mdi-account" size="extra-large" />
 	</MrButton>
 </div>
 

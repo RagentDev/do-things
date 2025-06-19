@@ -1,0 +1,91 @@
+﻿// Theme color definitions
+:root {
+	// Light theme (default)
+	--color-primary: #1e3051;
+	--color-secondary: #64748b;
+	--color-background: #ffffff;
+	--color-surface: #f8fafc;
+	--color-accent: #8b5cf6;
+	--color-success: #10b981;
+	--color-warning: #f59e0b;
+	--color-error: #ef4444;
+
+	// Light theme text colors
+	--color-text-primary: #dcdcdc;
+	--color-text-secondary: #334155;
+	--color-text-muted: #64748b;
+	--color-text-inverse: #ffffff;
+
+    // Light theme background colors
+    --bg-top-primary: #4785ff;
+    --bg-bottom-primary: #7b4aff;
+}
+
+// Dark theme
+[data-theme='dark'] {
+	--color-primary: #60a5fa;
+	--color-secondary: #94a3b8;
+	--color-background: #0f172a;
+	--color-surface: #1e293b;
+	--color-accent: #a78bfa;
+	--color-success: #34d399;
+	--color-warning: #fbbf24;
+	--color-error: #f87171;
+
+	--color-text-primary: #f1f5f9;
+	--color-text-secondary: #cbd5e1;
+	--color-text-muted: #94a3b8;
+	--color-text-inverse: #0b101e;
+
+    --bg-top-primary: #ccbc0a;
+    --bg-bottom-primary: #b8701d;
+}
+
+// Custom theme
+[data-theme='custom'] {
+	--color-primary: #ff6b6b;
+	--color-secondary: #4ecdc4;
+	--color-background: #f7f1e3;
+	--color-surface: #ffffff;
+	--color-accent: #45b7d1;
+	--color-success: #96ceb4;
+	--color-warning: #feca57;
+	--color-error: #ff9ff3;
+
+	--color-text-primary: #2d3748;
+	--color-text-secondary: #4a5568;
+	--color-text-muted: #718096;
+	--color-text-inverse: #ffffff;
+
+    --bg-top-primary: #3fa353;
+    --bg-bottom-primary: #21547e;
+}
+
+// Background utility classes
+.bg-primary { background-color: var(--color-primary); }
+.bg-secondary { background-color: var(--color-secondary); }
+.bg-background { background-color: var(--color-background); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-accent { background-color: var(--color-accent); }
+.bg-success { background-color: var(--color-success); }
+.bg-warning { background-color: var(--color-warning); }
+.bg-error { background-color: var(--color-error); }
+
+// Text color utility classes
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.text-accent { color: var(--color-accent); }
+.text-success { color: var(--color-success); }
+.text-warning { color: var(--color-warning); }
+.text-error { color: var(--color-error); }
+.text-muted { color: var(--color-text-muted); }
+.text-inverse { color: var(--color-text-inverse); }
+
+// Border utility classes
+.border-primary { border-color: var(--color-primary); }
+.border-secondary { border-color: var(--color-secondary); }
+.border-surface { border-color: var(--color-surface); }
+.border-accent { border-color: var(--color-accent); }
+.border-success { border-color: var(--color-success); }
+.border-warning { border-color: var(--color-warning); }
+.border-error { border-color: var(--color-error); }

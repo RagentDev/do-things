@@ -4,7 +4,7 @@
 	interface Props {
 		class?: string;
 		variant?: 'filled' | 'outlined' | 'text';
-		size?: 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
+		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 		color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error';
 		icon?: boolean;
 		disabled?: boolean;
@@ -15,93 +15,109 @@
 	let {
 		class: className = '',
 		variant = 'filled',
-		size = 'medium',
+		size = 'md',
 		color = 'primary',
 		icon = false,
 		disabled = false,
 		onclick,
 		children
 	}: Props = $props();
-
-	function getSizeClasses(size: Props['size']): string {
-		let sizeMap;
-		if (icon) {
-			sizeMap = {
-				'extra-small': 'p-1 text-xs',
-				small: 'p-2 text-sm',
-				medium: 'p-2 text-base',
-				large: 'p-2 text-lg',
-				'extra-large': 'p-2 text-xl'
-			} as const;
-		} else {
-			sizeMap = {
-				'extra-small': 'px-2 py-1 text-xs h-6',
-				small: 'px-3 py-1.5 text-sm h-8',
-				medium: 'px-4 py-2 text-base h-10',
-				large: 'px-6 py-3 text-lg h-12',
-				'extra-large': 'px-8 py-4 text-xl h-14'
-			} as const;
-		}
-
-		return sizeMap[size || 'medium'];
-	}
-
-	function getVariantClasses(variant: Props['variant'], color: Props['color']): string {
-		const colorKey = color || 'primary';
-		const variantKey = variant || 'filled';
-
-		const classes = {
-			filled: {
-				primary: 'bg-primary hover:bg-primary/80 disabled:hover:bg-primary text-white',
-				secondary:
-					'bg-secondary hover:bg-secondary/80 disabled:hover:bg-secondary text-white',
-				success: 'bg-success hover:bg-success/80 disabled:hover:bg-success text-white',
-				warning: 'bg-warning hover:bg-warning/80 disabled:hover:bg-warning text-white',
-				error: 'bg-error hover:bg-error/80 disabled:hover:bg-error text-white'
-			},
-			outlined: {
-				primary:
-					'border-2 border-primary text-primary hover:bg-primary hover:text-white disabled:hover:bg-transparent disabled:hover:text-primary',
-				secondary:
-					'border-2 border-secondary text-secondary hover:bg-secondary hover:text-white disabled:hover:bg-transparent disabled:hover:text-secondary',
-				success:
-					'border-2 border-success text-success hover:bg-success hover:text-white disabled:hover:bg-transparent disabled:hover:text-success',
-				warning:
-					'border-2 border-warning text-warning hover:bg-warning hover:text-white disabled:hover:bg-transparent disabled:hover:text-warning',
-				error: 'border-2 border-error text-error hover:bg-error hover:text-white disabled:hover:bg-transparent disabled:hover:text-error'
-			},
-			text: {
-				primary: 'text-primary hover:bg-primary/10 disabled:hover:bg-transparent',
-				secondary: 'text-secondary hover:bg-secondary/10 disabled:hover:bg-transparent',
-				success: 'text-success hover:bg-success/10 disabled:hover:bg-transparent',
-				warning: 'text-warning hover:bg-warning/10 disabled:hover:bg-transparent',
-				error: 'text-error hover:bg-error/10 disabled:hover:bg-transparent'
-			}
-		} as const;
-
-		return classes[variantKey][colorKey];
-	}
-
-	const baseClasses = $derived(
-		`
-		inline-flex items-center justify-center
-		cursor-pointer
-		font-medium
-		${icon ? 'rounded-full' : 'rounded-md'}
-		transition-all duration-150
-		active:scale-95
-		disabled:opacity-50 disabled:saturate-50 disabled:cursor-not-allowed disabled:active:scale-100
-		${getSizeClasses(size)}
-		${getVariantClasses(variant, color)}
-		${className}
-	`
-			.trim()
-			.replace(/\s+/g, ' ')
-	);
 </script>
 
-<button class={baseClasses} {disabled} {onclick}>
+<button
+	class="mr-button mr-button-size-{size} mr-button-variant-{variant} {icon
+		? 'rounded-full'
+		: 'rounded-md'} {className}"
+	style="--btn-color: var(--color-{color})"
+	{disabled}
+	{onclick}
+>
 	{#if children}
 		{@render children()}
 	{/if}
 </button>
+
+<style>
+	.mr-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		font-weight: 500;
+		border: 0;
+	}
+
+	.mr-button:active {
+		transform: scale(0.95);
+	}
+
+	.mr-button:disabled {
+		opacity: 0.5;
+		filter: saturate(0.5);
+		cursor: not-allowed;
+	}
+
+	.mr-button:disabled:active {
+		transform: scale(1);
+	}
+
+	/* Size modifiers */
+	.mr-button-size-xs {
+		padding: 0.25rem 0.5rem;
+		font-size: 0.75rem;
+		line-height: 1rem;
+	}
+
+	.mr-button-size-sm {
+		padding: 0.375rem 0.75rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+	}
+
+	.mr-button-size-md {
+		padding: 0.5rem 1rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+	}
+
+	.mr-button-size-lg {
+		padding: 0.625rem 1.25rem;
+		font-size: 1rem;
+		line-height: 1.5rem;
+	}
+
+	.mr-button-size-xl {
+		padding: 0.75rem 1.5rem;
+		font-size: 1.125rem;
+		line-height: 1.75rem;
+	}
+
+	/* Dynamic variant styles */
+	.mr-button-variant-filled {
+		background-color: var(--btn-color);
+		color: var(--color-text-primary);
+	}
+
+	.mr-button-variant-outlined {
+		border: 2px solid var(--btn-color);
+		color: var(--color-text-primary);
+		background-color: transparent;
+	}
+
+	.mr-button-variant-text {
+		color: var(--color-text-primary);
+		background-color: transparent;
+	}
+
+	/* Hover effects */
+	.mr-button-variant-filled:hover:not(:disabled) {
+		opacity: 0.7;
+	}
+	.mr-button-variant-outlined:hover:not(:disabled) {
+		background-color: color-mix(in srgb, var(--btn-color) 20%, transparent);
+	}
+	.mr-button-variant-text:hover:not(:disabled) {
+		background-color: color-mix(in srgb, var(--btn-color) 20%, transparent);
+	}
+</style>

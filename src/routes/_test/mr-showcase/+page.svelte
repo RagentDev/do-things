@@ -3,15 +3,15 @@
 	import MrIcon from '$lib/components/common/MrIcon.svelte';
 
 	const variants = ['filled', 'outlined', 'text'] as const;
-	const sizes = ['extra-small', 'small', 'medium', 'large', 'extra-large'] as const;
+	const sizes = ['xs', 'sm', 'md', 'lg', 'xl'] as const;
 </script>
 
-<div class="p-8 space-y-12">
-	<h1 class="text-white text-3xl font-bold mb-8">Button Component Showcase</h1>
+<div class="pl-8">
+	<h1>Button Component Showcase</h1>
 
 	<!-- Variants -->
 	<section>
-		<h2 class="text-white text-2xl font-semibold mb-4">Variants</h2>
+		<h2 class="text-2xl font-semibold mb-4">Variants</h2>
 		<div class="flex gap-4 items-center flex-wrap">
 			{#each variants as variant}
 				<MrButton {variant}>{variant}</MrButton>
@@ -41,7 +41,7 @@
 
 	<!-- Sizes -->
 	<section>
-		<h2 class="text-white text-2xl font-semibold mb-4">Sizes</h2>
+		<h2 class="mb-4">Sizes</h2>
 		<div class="flex gap-4 items-center flex-wrap">
 			{#each sizes as size}
 				<MrButton {size}>{size}</MrButton>
@@ -51,21 +51,19 @@
 
 	<!-- Icon Buttons -->
 	<section>
-		<h2 class="text-white text-2xl font-semibold mb-4">Icon Buttons</h2>
-		<div class="space-y-4">
-			{#each variants as variant}
-				<div class="space-y-2">
-					<h3 class="text-white text-lg font-medium capitalize">{variant}</h3>
-					<div class="flex gap-4 items-center flex-wrap">
-						{#each sizes as size}
-							<MrButton {variant} {size} icon>
-								<MrIcon icon="mdi-heart" class="text-secondary" {size} />
-							</MrButton>
-						{/each}
-					</div>
+		<h2 class="mb-4">Icon Buttons</h2>
+		{#each variants as variant}
+			<div class="space-y-2">
+				<h3 class="text-white text-lg font-medium capitalize">{variant}</h3>
+				<div class="flex gap-4 items-center flex-wrap">
+					{#each sizes as size}
+						<MrButton {variant} {size} icon>
+							<MrIcon icon="mdi-heart" class="text-secondary" {size} />
+						</MrButton>
+					{/each}
 				</div>
-			{/each}
-		</div>
+			</div>
+		{/each}
 	</section>
 
 	<!-- Prepend Icon Buttons -->
