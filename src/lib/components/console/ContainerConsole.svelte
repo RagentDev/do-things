@@ -86,8 +86,8 @@
 
 {#if isVisible && logger}
 	<div
-		class="fixed bg-white border border-black rounded-lg z-[10000] flex flex-col font-mono text-xs"
-		style="left: {position.x}px; top: {position.y}px; width: {size.width}px; height: {size.height}px;"
+		class="fixed bg-surface rounded-lg flex flex-col"
+		style="left: {position.x}px; top: {position.y}px; width: {size.width}px; height: {size.height}px; z-index: 10000;"
 		role="dialog"
 	>
 		<ContainerConsoleHeader
@@ -101,10 +101,8 @@
 		/>
 
 		{#if !logger.isPlaying}
-			<div class="bg-yellow-100 border border-gray-200 px-3 py-3">
-				<span class="text-yellow-800">
-					⚠️ Logging paused - new logs will be discarded
-				</span>
+			<div class="bg-warning px-3 py-3">
+				<span class="text-primary"> ⚠️ Logging paused - new logs will be discarded </span>
 			</div>
 		{/if}
 
