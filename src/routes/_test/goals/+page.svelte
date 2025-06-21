@@ -195,7 +195,7 @@
 							: ''} {isGoalCompleted(goal) ? 'completed' : ''}"
 					>
 						<div class="goal-icon">
-							<MrIcon icon={goal.icon} size="medium" />
+							<MrIcon icon={goal.icon} size="md" />
 						</div>
 						<div class="goal-details">
 							<h4>{goal.name}</h4>

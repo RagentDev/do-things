@@ -11,18 +11,15 @@
 </script>
 
 {#if logger}
-	<MrButton
-		class="fixed bottom-5 right-5"
-		variant="filled"
-		color="secondary"
-		icon
-		onclick={onToggle}
-	>
-		<MrIcon icon="mdi-console" class="text-primary" size="large" />
-		<span
-			class="absolute -top-2 -right-2 bg-error text-white rounded-full min-w-5 h-5 flex items-center justify-center text-[10px] font-bold"
-		>
-			{logger.logs.length}
-		</span>
-	</MrButton>
+	<div class="fixed" style="bottom: 5px; right: 5px;">
+		<MrButton variant="filled" color="secondary" icon onclick={onToggle}>
+			<MrIcon icon="mdi-console" class="text-primary" size="lg" />
+			<span
+				class="absolute bg-error rounded-full flex items-center justify-center font-bold"
+				style="top: -2px; right: -2px; min-width: 25px"
+			>
+				{logger.logs.length}
+			</span>
+		</MrButton>
+	</div>
 {/if}

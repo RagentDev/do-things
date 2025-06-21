@@ -82,7 +82,7 @@
 							<div
 								class="w-10 h-10 flex items-center justify-center mr-4 text-blue-500"
 							>
-								<MrIcon icon={goal.icon} size="extra-large" />
+								<MrIcon icon={goal.icon} size="xl" />
 							</div>
 							<div class="flex-1">
 								<span>{goal.name}</span>
@@ -116,7 +116,7 @@
 									</span>
 									{#if isGoalCompleted(goal)}
 										<div class="ml-2 flex items-center text-success">
-											<MrIcon icon="mdi-checkbox-marked" size="small" />
+											<MrIcon icon="mdi-checkbox-marked" size="sm" />
 										</div>
 										<span>Completed</span>
 									{/if}
@@ -135,7 +135,7 @@
 										onclick={() => decreaseGoalValue(goal.goalSetupId)}
 										disabled={goal.currentAmount <= 0}
 									>
-										<MrIcon size="small" icon="mdi-minus" class="text-white" />
+										<MrIcon size="sm" icon="mdi-minus" class="text-white" />
 									</MrButton>
 									<span class="w-8 text-center font-bold"
 										>{goal.currentAmount}</span
@@ -145,7 +145,7 @@
 										icon
 										onclick={() => increaseGoalValue(goal.goalSetupId)}
 									>
-										<MrIcon size="small" icon="mdi-plus" class="text-white" />
+										<MrIcon size="sm" icon="mdi-plus" class="text-white" />
 									</MrButton>
 								</div>
 							{/if}

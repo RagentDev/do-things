@@ -5,25 +5,25 @@
 	interface $$Props extends HTMLButtonAttributes {
 		class?: string;
 		icon: string;
-		size?: 'extra-small' | 'small' | 'medium' | 'large' | 'extra-large';
+		size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	}
 
 	let className: string = '';
 	export { className as class };
 
 	export let icon: $$Props['icon'] = 'mdi-help-circle';
-	export let size: $$Props['size'] = 'medium';
+	export let size: $$Props['size'] = 'md';
 
 	function getSizeValue(size: $$Props['size']): number {
 		const sizeMap = {
-			'extra-small': 12,
-			small: 16,
-			medium: 24,
-			large: 32,
-			'extra-large': 48
+			xs: 12,
+			sm: 16,
+			md: 24,
+			lg: 32,
+			xl: 48
 		} as const;
 
-		return sizeMap[size || 'medium'];
+		return sizeMap[size || 'md'];
 	}
 
 	$: sizeValue = getSizeValue(size);

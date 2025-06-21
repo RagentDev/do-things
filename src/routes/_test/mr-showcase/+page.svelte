@@ -174,27 +174,27 @@
 			<div class="space-y-2">
 				<h3 class="text-white text-lg font-medium">Size Variations</h3>
 				<div class="flex gap-4 items-center flex-wrap">
-					<MrButton size="extra-small">
+					<MrButton size="xs">
 						<MrIcon icon="mdi-plus" class="mr-1" />
 						Add
 					</MrButton>
 
-					<MrButton size="small">
+					<MrButton size="sm">
 						<MrIcon icon="mdi-content-save" class="mr-2" />
 						Save
 					</MrButton>
 
-					<MrButton size="medium">
+					<MrButton size="md">
 						<MrIcon icon="mdi-download" class="mr-2" />
 						Download
 					</MrButton>
 
-					<MrButton size="large">
+					<MrButton size="lg">
 						<MrIcon icon="mdi-share" class="mr-2" />
 						Share File
 					</MrButton>
 
-					<MrButton size="extra-large">
+					<MrButton size="xl">
 						<MrIcon icon="mdi-heart" class="mr-3" />
 						Add to Favorites
 					</MrButton>
