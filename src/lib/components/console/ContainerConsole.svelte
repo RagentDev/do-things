@@ -110,8 +110,8 @@
 
 		<!-- Resize handle -->
 		<div
-			class="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize bg-gray-300 hover:bg-gray-400 transition-colors"
-			style="clip-path: polygon(100% 0%, 0% 100%, 100% 100%);"
+			class="absolute cursor-se-resize bg-secondary"
+			style="bottom: 0; right: 0; width: 16px; height: 16px; clip-path: polygon(100% 0%, 0% 100%, 100% 100%);"
 			onmousedown={handleResizeMouseDown}
 			role="button"
 			tabindex="0"

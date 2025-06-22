@@ -22,12 +22,12 @@
 		onclick,
 		children
 	}: Props = $props();
+
+	const iconClasses = $derived(icon ? 'rounded-full' : 'rounded-md');
 </script>
 
 <button
-	class="mr-button mr-button-size-{size} mr-button-variant-{variant} {icon
-		? 'rounded-full'
-		: 'rounded-md'} {className}"
+	class="mr-button mr-button-size-{size} mr-button-variant-{variant} {iconClasses} {className}"
 	style="--btn-color: var(--color-{color})"
 	{disabled}
 	{onclick}
@@ -119,5 +119,22 @@
 	}
 	.mr-button-variant-text:hover:not(:disabled) {
 		background-color: color-mix(in srgb, var(--btn-color) 20%, transparent);
+	}
+
+	/* Add icon-specific padding overrides */
+	.mr-button.rounded-full.mr-button-size-xs {
+		padding: 0.25rem;
+	}
+	.mr-button.rounded-full.mr-button-size-sm {
+		padding: 0.375rem;
+	}
+	.mr-button.rounded-full.mr-button-size-md {
+		padding: 0.5rem;
+	}
+	.mr-button.rounded-full.mr-button-size-lg {
+		padding: 0.625rem;
+	}
+	.mr-button.rounded-full.mr-button-size-xl {
+		padding: 0.75rem;
 	}
 </style>

@@ -1,15 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import '../app.scss';
-	import InstallPrompt from '$lib/components/InstallPrompt.svelte';
-	import TestTailWind from '$lib/components/TestTailWind.svelte';
+	// import InstallPrompt from '$lib/components/InstallPrompt.svelte';
 	import BottomBar from '$lib/components/BottomBar.svelte';
 	import DialogConsole from '$lib/components/console/DialogConsole.svelte';
-	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 	import { isDev } from '$lib/config.js';
 	import { dailyGoals } from '$lib/runes/dailyGoalsRunes.svelte';
 	import { logger } from '$lib/runes/loggerRunes.svelte';
 	import { theme } from '$lib/runes/themeStore.svelte.js';
+	import TopBar from '$lib/components/TopBar.svelte';
 
 	// Initialize persistence when component mounts
 	onMount(() => {
@@ -32,15 +31,14 @@
 
 	<!-- Top Bar -->
 	<div class="flex-shrink-0">
-		<TestTailWind />
+		<TopBar />
 	</div>
 
 	<!-- Content Area - NOW SCROLLABLE -->
 	<div class="flex-1 overflow-y-auto">
-		<div class="sticky z-10" style="top: 0px">
-			<InstallPrompt />
-		</div>
-		<ThemeSwitcher />
+		<!--		<div class="z-10" style="top: 0px">-->
+		<!--			<InstallPrompt />-->
+		<!--		</div>-->
 		<slot />
 	</div>
 
