@@ -4,8 +4,7 @@
 	import { goto } from '$app/navigation';
 </script>
 
-<!-- $lib/components/TopBar.svelte -->
-<div class="relative w-full z-10 border-fade-bottom">
+<div class="relative w-full border-fade-bottom">
 	<div class="flex items-center justify-between px-4 h-14">
 		<MrButton variant="text" size="xs" onclick={() => goto('/')}>Do Things</MrButton>
 		<ThemeSwitcher />
