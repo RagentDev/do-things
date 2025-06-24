@@ -12,4 +12,4 @@
 </script>
 
 <ContainerConsole bind:this={floatingConsole} bind:isVisible />
-<ButtonToggleConsole {isVisible} onToggle={toggleConsole} />
+<ButtonToggleConsole onToggle={toggleConsole} />

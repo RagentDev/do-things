@@ -38,7 +38,7 @@
 {#if logger}
 	<div
 		bind:this={logContainer}
-		class="log-container flex-1 overflow-y-auto p-2 bg-gray-50 rounded-b-lg scroll-smooth"
+		class="log-container flex-1 overflow-y-auto p-2 bg-background rounded-lg scroll-smooth"
 		role="log"
 		aria-live="polite"
 	>
@@ -47,7 +47,7 @@
 		{/each}
 
 		{#if logger.logs.length === 0}
-			<div class="text-center text-gray-500 p-5 italic">No logs yet...</div>
+			<div class="text-center text-muted p-5 italic">No logs yet...</div>
 		{/if}
 	</div>
 {/if}

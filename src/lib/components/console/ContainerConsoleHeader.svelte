@@ -1,16 +1,7 @@
 ﻿<script lang="ts">
 	import { logger } from '$lib/runes/loggerRunes.svelte';
-	import ButtonConsole from '$lib/components/console/ButtonConsole.svelte';
-	import Icon from '$lib/components/common/Icon.svelte';
-	import {
-		mdiArrowDownBox,
-		mdiClose,
-		mdiLock,
-		mdiMouseScrollWheel,
-		mdiPauseBox,
-		mdiPlayBox,
-		mdiTrashCan
-	} from '@mdi/js';
+	import MrIcon from '$lib/components/common/MrIcon.svelte';
+	import MrButton from '$lib/components/common/MrButton.svelte';
 
 	interface Props {
 		handleMouseDown: (e: MouseEvent) => void;
@@ -44,35 +35,35 @@
 
 {#if logger}
 	<div
-		class="bg-gray-100 border-b border-black cursor-move flex justify-between items-center rounded-t-lg"
+		class="bg-surface border-b border-secondary cursor-move flex justify-between items-center rounded-lg py-1"
 		onmousedown={handleMouseDown}
 		onkeydown={handleKeyDown}
 		role="button"
 		tabindex="0"
 	>
-		<span class="pl-2 font-bold text-gray-800">Custom Console ({logCount})</span>
+		<span class="pl-2 font-bold text-secondary">Custom Console ({logCount})</span>
 		<div class="flex gap-1">
-			<ButtonConsole onclick={() => logger?.toggle()} class="p-1 px-2">
-				<Icon
-					path={isPlaying ? mdiPauseBox : mdiPlayBox}
-					class={isPlaying ? 'text-blue-400' : 'text-red-400'}
+			<MrButton variant="text" icon onclick={() => logger?.toggle()}>
+				<MrIcon
+					icon={isPlaying ? 'mdi-pause-box' : 'mdi-play-box'}
+					class={isPlaying ? 'text-primary' : 'text-error'}
 				/>
-			</ButtonConsole>
-			<ButtonConsole onclick={() => logger?.clear()} class="py-1 px-2">
-				<Icon path={mdiTrashCan} class="text-gray-400" />
-			</ButtonConsole>
-			<ButtonConsole onclick={onToggleAutoScroll} class="p-1 px-2">
-				<Icon
-					path={autoScroll ? mdiMouseScrollWheel : mdiLock}
-					class={autoScroll ? 'text-blue-400' : 'text-red-400'}
+			</MrButton>
+			<MrButton variant="text" icon onclick={() => logger?.clear()}>
+				<MrIcon icon="mdi-trash-can" class="text-muted" />
+			</MrButton>
+			<MrButton variant="text" icon onclick={onToggleAutoScroll}>
+				<MrIcon
+					icon={autoScroll ? 'mdi-mouse-scroll-wheel' : 'mdi-lock'}
+					class={autoScroll ? 'text-primary' : 'text-error'}
 				/>
-			</ButtonConsole>
-			<ButtonConsole onclick={scrollToBottom} class="p-1 px-2">
-				<Icon path={mdiArrowDownBox} class="text-blue-400" />
-			</ButtonConsole>
-			<ButtonConsole onclick={onClose} class="p-2">
-				<Icon path={mdiClose} class="text-gray-600" />
-			</ButtonConsole>
+			</MrButton>
+			<MrButton variant="text" icon onclick={scrollToBottom}>
+				<MrIcon icon="mdi-arrow-down-box" class="text-primary" />
+			</MrButton>
+			<MrButton variant="text" icon color="error" onclick={onClose} class="ml-5">
+				<MrIcon icon="mdi-close" class="text-error" />
+			</MrButton>
 		</div>
 	</div>
 {/if}
