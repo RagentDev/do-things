@@ -3,7 +3,7 @@ import { spawn } from 'child_process';
 import type { Plugin } from 'vite';
 
 export function svelteCheckPlugin(): Plugin {
-	let server: any;
+	let server: { ws?: { send: (data: unknown) => void } };
 
 	const runSvelteCheck = async (): Promise<void> => {
 		console.log('🔍 Running svelte-check...');

@@ -12,18 +12,26 @@
 	let isDragging = $state<boolean>(false);
 	let isResizing = $state<boolean>(false);
 	let position = $state<Position>({ x: 0, y: 0 });
-	let size = $state<{ width: number; height: number }>({ width: 600, height: 384 });
+	let size = $state<{ width: number; height: number }>({
+		width: Math.min(600, window.innerWidth - 40),
+		height: Math.min(384, window.innerHeight - 40)
+	});
 	let dragOffset = $state<Position>({ x: 0, y: 0 });
 	let resizeOffset = $state<Position>({ x: 0, y: 0 });
 	let autoScroll = $state<boolean>(true);
 	let wasVisible = $state<boolean>(false);
 
-	// Reset position to center when console becomes visible
+	// Reset position and size when console becomes visible
 	$effect(() => {
 		if (isVisible && !wasVisible) {
+			// Responsive sizing
+			const maxWidth = Math.min(600, window.innerWidth - 40);
+			const maxHeight = Math.min(384, window.innerHeight - 40);
+
+			size = { width: maxWidth, height: maxHeight };
 			position = {
-				x: (window.innerWidth - size.width) / 2,
-				y: (window.innerHeight - size.height) / 2
+				x: Math.max(20, (window.innerWidth - maxWidth) / 2),
+				y: Math.max(20, (window.innerHeight - maxHeight) / 2)
 			};
 		}
 		wasVisible = isVisible;
@@ -38,7 +46,24 @@
 
 		document.addEventListener('mousemove', handleMouseMove);
 		document.addEventListener('mouseup', handleMouseUp);
+		document.addEventListener('touchmove', handleTouchMove, { passive: false });
+		document.addEventListener('touchend', handleTouchEnd);
 		e.preventDefault();
+	}
+
+	function handleTouchStart(e: TouchEvent): void {
+		if (e.touches.length === 1) {
+			const touch = e.touches[0];
+			isDragging = true;
+			dragOffset = {
+				x: touch.clientX - position.x,
+				y: touch.clientY - position.y
+			};
+
+			document.addEventListener('touchmove', handleTouchMove, { passive: false });
+			document.addEventListener('touchend', handleTouchEnd);
+			e.preventDefault();
+		}
 	}
 
 	function handleResizeMouseDown(e: MouseEvent): void {
@@ -57,14 +82,39 @@
 	function handleMouseMove(e: MouseEvent): void {
 		if (isDragging) {
 			position = {
-				x: e.clientX - dragOffset.x,
-				y: e.clientY - dragOffset.y
+				x: Math.max(0, Math.min(window.innerWidth - size.width, e.clientX - dragOffset.x)),
+				y: Math.max(0, Math.min(window.innerHeight - size.height, e.clientY - dragOffset.y))
 			};
 		} else if (isResizing) {
 			size = {
-				width: Math.max(300, e.clientX - resizeOffset.x),
-				height: Math.max(200, e.clientY - resizeOffset.y)
+				width: Math.max(
+					300,
+					Math.min(window.innerWidth - position.x, e.clientX - resizeOffset.x)
+				),
+				height: Math.max(
+					200,
+					Math.min(window.innerHeight - position.y, e.clientY - resizeOffset.y)
+				)
 			};
+		}
+	}
+
+	function handleTouchMove(e: TouchEvent): void {
+		if (e.touches.length === 1) {
+			const touch = e.touches[0];
+			if (isDragging) {
+				position = {
+					x: Math.max(
+						0,
+						Math.min(window.innerWidth - size.width, touch.clientX - dragOffset.x)
+					),
+					y: Math.max(
+						0,
+						Math.min(window.innerHeight - size.height, touch.clientY - dragOffset.y)
+					)
+				};
+				e.preventDefault();
+			}
 		}
 	}
 
@@ -73,6 +123,15 @@
 		isResizing = false;
 		document.removeEventListener('mousemove', handleMouseMove);
 		document.removeEventListener('mouseup', handleMouseUp);
+		document.removeEventListener('touchmove', handleTouchMove);
+		document.removeEventListener('touchend', handleTouchEnd);
+	}
+
+	function handleTouchEnd(): void {
+		isDragging = false;
+		isResizing = false;
+		document.removeEventListener('touchmove', handleTouchMove);
+		document.removeEventListener('touchend', handleTouchEnd);
 	}
 
 	function handleKeyDown(e: KeyboardEvent): void {
@@ -92,6 +151,7 @@
 	>
 		<ContainerConsoleHeader
 			{handleMouseDown}
+			{handleTouchStart}
 			{handleKeyDown}
 			logCount={logger.logs.length}
 			isPlaying={logger.isPlaying}
