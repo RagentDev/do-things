@@ -7,8 +7,7 @@
 		{ name: 'Empty', path: '/_test/empty' },
 		{ name: 'Goals', path: '/_test/goals' },
 		{ name: 'Goals List', path: '/_test/goals-list' },
-		{ name: 'MR Showcase', path: '/_test/mr-showcase' },
-		{ name: 'Pressure', path: '/_test/pressure' }
+		{ name: 'MR Showcase', path: '/_test/mr-showcase' }
 	];
 </script>
 
