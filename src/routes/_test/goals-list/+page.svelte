@@ -60,11 +60,11 @@
 	}
 </script>
 
-<div class="w-5/6 m-auto p-4">
+<div class="p-4" style="width: 83.333333%; margin: 0 auto;">
 	<div>
 		<div class="flex items-center justify-between mb-4">
 			<MrButton onclick={() => changeDate(-1)}>← Previous Day</MrButton>
-			<span class="text-white">
+			<span class="text-inverse">
 				{displayDate.toLocaleDateString()} ({getDayNameForDate(displayDate)})
 			</span>
 			<MrButton onclick={() => changeDate(1)}>Next Day →</MrButton>
