@@ -54,7 +54,7 @@
 		<h2 class="mb-4">Icon Buttons</h2>
 		{#each variants as variant}
 			<div class="space-y-2">
-				<h3 class="text-white text-lg font-medium capitalize">{variant}</h3>
+				<h3 class=" text-lg font-medium capitalize">{variant}</h3>
 				<div class="flex gap-4 items-center flex-wrap">
 					{#each sizes as size}
 						<MrButton {variant} {size} icon>
@@ -68,11 +68,11 @@
 
 	<!-- Prepend Icon Buttons -->
 	<section>
-		<h2 class="text-white text-2xl font-semibold mb-4">Prepend Icon Buttons</h2>
+		<h2 class=" text-2xl font-semibold mb-4">Prepend Icon Buttons</h2>
 		<div class="space-y-4">
 			{#each variants as variant}
 				<div class="space-y-2">
-					<h3 class="text-white text-lg font-medium capitalize">{variant}</h3>
+					<h3 class=" text-lg font-medium capitalize">{variant}</h3>
 					<div class="flex gap-4 items-center flex-wrap">
 						{#each sizes as size}
 							<MrButton {variant} {size}>
@@ -88,11 +88,11 @@
 
 	<!-- Append Icon Buttons -->
 	<section>
-		<h2 class="text-white text-2xl font-semibold mb-4">Append Icon Buttons</h2>
+		<h2 class=" text-2xl font-semibold mb-4">Append Icon Buttons</h2>
 		<div class="space-y-4">
 			{#each variants as variant}
 				<div class="space-y-2">
-					<h3 class="text-white text-lg font-medium capitalize">{variant}</h3>
+					<h3 class=" text-lg font-medium capitalize">{variant}</h3>
 					<div class="flex gap-4 items-center flex-wrap">
 						{#each sizes as size}
 							<MrButton {variant} {size}>
@@ -108,7 +108,7 @@
 
 	<!-- Disabled States -->
 	<section>
-		<h2 class="text-white text-2xl font-semibold mb-4">Disabled States</h2>
+		<h2 class=" text-2xl font-semibold mb-4">Disabled States</h2>
 		<div class="space-y-4">
 			{#each variants as variant}
 				<div class="flex gap-4 items-center flex-wrap">
@@ -129,11 +129,11 @@
 
 	<!-- Real-world Examples -->
 	<section>
-		<h2 class="text-white text-2xl font-semibold mb-4">Real-world Examples</h2>
+		<h2 class=" text-2xl font-semibold mb-4">Real-world Examples</h2>
 		<div class="space-y-6">
 			<!-- Action buttons -->
 			<div class="space-y-2">
-				<h3 class="text-white text-lg font-medium">Action Buttons</h3>
+				<h3 class=" text-lg font-medium">Action Buttons</h3>
 				<div class="flex gap-4 flex-wrap">
 					<MrButton variant="filled">
 						<MrIcon icon="mdi-plus" class="mr-2" />
@@ -154,7 +154,7 @@
 
 			<!-- Icon only buttons -->
 			<div class="space-y-2">
-				<h3 class="text-white text-lg font-medium">Icon Only Buttons</h3>
+				<h3 class=" text-lg font-medium">Icon Only Buttons</h3>
 				<div class="flex gap-4 flex-wrap">
 					<MrButton variant="filled" class="!p-3 rounded-full">
 						<MrIcon icon="mdi-heart" class="text-current" />
@@ -172,7 +172,7 @@
 
 			<!-- Size variations with icons -->
 			<div class="space-y-2">
-				<h3 class="text-white text-lg font-medium">Size Variations</h3>
+				<h3 class=" text-lg font-medium">Size Variations</h3>
 				<div class="flex gap-4 items-center flex-wrap">
 					<MrButton size="xs">
 						<MrIcon icon="mdi-plus" class="mr-1" />

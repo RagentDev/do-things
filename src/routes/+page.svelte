@@ -15,7 +15,7 @@
 	<div>
 		<div>
 			<GlassCard>
-				<h1 class="font-bold text-inverse mb-2 px-2">Test Pages</h1>
+				<h1 class="font-bold mb-2 px-2">Test Pages</h1>
 				<div class="flex flex-col gap-2 p-2">
 					{#each testPages as page}
 						<MrButton
@@ -33,10 +33,10 @@
 		<br />
 		<div class="text-center">
 			<GlassCard>
-				<h1 class="font-bold text-inverse mb-2 px-2">
+				<h1 class="font-bold mb-2 px-2">
 					Do Things<span class="text-warning font-bold">.</span>
 				</h1>
-				<p class="text-inverse font-light mt-0 px-2">
+				<p class="font-light mt-0 px-2">
 					In life<span class="text-warning font-bold">.</span>
 				</p>
 			</GlassCard>

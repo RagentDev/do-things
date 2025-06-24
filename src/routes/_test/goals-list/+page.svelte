@@ -64,14 +64,14 @@
 	<div>
 		<div class="flex items-center justify-between mb-4">
 			<MrButton onclick={() => changeDate(-1)}>← Previous Day</MrButton>
-			<span class="text-inverse">
+			<span>
 				{displayDate.toLocaleDateString()} ({getDayNameForDate(displayDate)})
 			</span>
 			<MrButton onclick={() => changeDate(1)}>Next Day →</MrButton>
 		</div>
 
 		{#if currentGoals.length === 0}
-			<span class="text-white">No goals found for this date.</span>
+			<span>No goals found for this date.</span>
 		{:else}
 			<div class="grid gap-2">
 				{#each currentGoals as goal}
