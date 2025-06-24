@@ -37,7 +37,6 @@
 	},
 	"dependencies": {
 		"@mdi/js": "^7.4.47",
-		"date-fns": "^4.1.0",
-		"tailwindcss": "^4.1.8"
+		"date-fns": "^4.1.0"
 	}
 }

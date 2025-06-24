@@ -35,13 +35,13 @@
 
 {#if logger}
 	<div
-		class="bg-gray-100 border-b border-black cursor-move flex justify-between items-center rounded-t-lg py-1"
+		class="bg-surface border-b border-secondary cursor-move flex justify-between items-center rounded-lg py-1"
 		onmousedown={handleMouseDown}
 		onkeydown={handleKeyDown}
 		role="button"
 		tabindex="0"
 	>
-		<span class="pl-2 font-bold text-gray-800">Custom Console ({logCount})</span>
+		<span class="pl-2 font-bold text-secondary">Custom Console ({logCount})</span>
 		<div class="flex gap-1">
 			<MrButton variant="text" icon onclick={() => logger?.toggle()}>
 				<MrIcon
@@ -50,7 +50,7 @@
 				/>
 			</MrButton>
 			<MrButton variant="text" icon onclick={() => logger?.clear()}>
-				<MrIcon icon="mdi-trash-can" class="text-gray-400" />
+				<MrIcon icon="mdi-trash-can" class="text-muted" />
 			</MrButton>
 			<MrButton variant="text" icon onclick={onToggleAutoScroll}>
 				<MrIcon
