@@ -4,9 +4,19 @@
 	import { goto } from '$app/navigation';
 </script>
 
-<div class="relative w-full border-fade-bottom">
-	<div class="flex items-center justify-between px-4 h-14">
+<div
+	class="top-bar relative w-full border-fade-bottom"
+	style="min-height: var(--header-bar-height)"
+>
+	<div class="flex items-center justify-between px-4">
 		<MrButton variant="text" size="xs" onclick={() => goto('/')}>Do Things</MrButton>
 		<ThemeSwitcher />
 	</div>
 </div>
+
+<style>
+	.top-bar {
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
+</style>

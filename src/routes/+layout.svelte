@@ -27,28 +27,32 @@
 
 <div class="flex flex-col h-screen overflow-hidden">
 	<!-- Safe Area Spacer -->
-	<div class="top-safe-area w-full flex-shrink-0" style="height: var(--sat);"></div>
+	<div class="w-full flex-shrink-0" style="height: var(--sat);"></div>
 
 	<!-- Top Bar -->
-	<div class="flex-shrink-0">
+	<div class="fixed" style="left: 0; right: 0; top: var(--sat); z-index: 50">
 		<TopBar />
 	</div>
 
 	<!-- Content Area - NOW SCROLLABLE -->
-	<div class="flex-1 overflow-y-auto">
-		<!--		<div class="z-10" style="top: 0px">-->
-		<!--			<InstallPrompt />-->
-		<!--		</div>-->
-		<slot />
+	<div class="flex-1 overflow-y-auto content-fade">
+		<div style="margin-top: var(--header-bar-height)">
+			<!--		<div class="z-10" style="top: 0px">-->
+			<!--			<InstallPrompt />-->
+			<!--		</div>-->
+			<slot />
+			<!-- Bottom spacing to allow content to scroll past the fixed bottom bar -->
+			<div style="height: 120px;"></div>
+		</div>
 	</div>
 
-	<!-- Bottom Bar -->
-	<div class="flex-shrink-0">
+	<!-- Bottom Bar - Now Fixed -->
+	<div class="fixed" style="left: 0; right: 0; bottom: var(--sab); z-index: 50">
 		<BottomBar />
 	</div>
 
 	<!-- Bottom Safe Area -->
-	<div class="bottom-safe-area w-full flex-shrink-0" style="height: var(--sab);"></div>
+	<div class="w-full flex-shrink-0" style="height: var(--sab);"></div>
 </div>
 
 {#if isDev}
@@ -56,12 +60,15 @@
 {/if}
 
 <style>
-	.top-safe-area {
-		color: var(--bg-top-primary);
-	}
-
-	.bottom-safe-area {
-		color: var(--bg-bottom-primary);
+	.content-fade {
+		mask: linear-gradient(to bottom, transparent 0%, black 10%, black 95%, transparent 100%);
+		-webkit-mask: linear-gradient(
+			to bottom,
+			transparent 0%,
+			black 10%,
+			black 90%,
+			transparent 100%
+		);
 	}
 
 	.floating-orbs {
