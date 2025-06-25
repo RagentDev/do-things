@@ -5,6 +5,7 @@
 
 	interface Props {
 		handleMouseDown: (e: MouseEvent) => void;
+		handleTouchStart: (e: TouchEvent) => void;
 		handleKeyDown: (e: KeyboardEvent) => void;
 		logCount: number;
 		isPlaying: boolean;
@@ -15,6 +16,7 @@
 
 	let {
 		handleMouseDown,
+		handleTouchStart,
 		handleKeyDown,
 		logCount,
 		isPlaying,
@@ -37,6 +39,7 @@
 	<div
 		class="bg-surface border-b border-secondary cursor-move flex justify-between items-center rounded-lg py-1"
 		onmousedown={handleMouseDown}
+		ontouchstart={handleTouchStart}
 		onkeydown={handleKeyDown}
 		role="button"
 		tabindex="0"

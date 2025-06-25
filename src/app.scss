@@ -26,18 +26,48 @@ body {
 	overflow: hidden;
 	touch-action: none;
 	overscroll-behavior: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* Re-enable text selection for input elements */
+input,
+textarea,
+[contenteditable='true'] {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
 }
 
 body {
-    color: var(--color-text-default);
-    background:
-        radial-gradient(circle at 20% 80%, var(--bg-top-primary) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, var(--bg-bottom-primary) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, oklch(from var(--bg-top-primary) calc(l + 0.1) c h) 0%, transparent 50%),
-        radial-gradient(circle at 60% 60%, oklch(from var(--bg-bottom-primary) calc(l - 0.1) c h) 0%, transparent 50%),
-        radial-gradient(circle at 90% 90%, oklch(from var(--bg-top-primary) calc(l + 0.05) c h) 0%, transparent 50%),
-        radial-gradient(circle at 10% 10%, oklch(from var(--bg-bottom-primary) calc(l + 0.05) c h) 0%, transparent 50%),
-        linear-gradient(135deg, var(--bg-top-primary) 0%, var(--bg-bottom-primary) 100%);
-    min-height: 100vh;
-    background-attachment: fixed;
+	color: var(--color-text-default);
+	background:
+		radial-gradient(circle at 20% 80%, var(--bg-top-primary) 0%, transparent 50%),
+		radial-gradient(circle at 80% 20%, var(--bg-bottom-primary) 0%, transparent 50%),
+		radial-gradient(
+			circle at 40% 40%,
+			oklch(from var(--bg-top-primary) calc(l + 0.1) c h) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 60% 60%,
+			oklch(from var(--bg-bottom-primary) calc(l - 0.1) c h) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 90% 90%,
+			oklch(from var(--bg-top-primary) calc(l + 0.05) c h) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 10% 10%,
+			oklch(from var(--bg-bottom-primary) calc(l + 0.05) c h) 0%,
+			transparent 50%
+		),
+		linear-gradient(135deg, var(--bg-top-primary) 0%, var(--bg-bottom-primary) 100%);
+	min-height: 100vh;
+	background-attachment: fixed;
 }
