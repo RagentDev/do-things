@@ -41,13 +41,9 @@
 	}
 
 	.bottom-bar {
-		position: relative;
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
-		border-top: 1px solid rgba(255, 255, 255, 0.5);
-
-		/* Fade blur towards bottom */
-		mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+		backdrop-filter: blur(3px);
+		-webkit-backdrop-filter: blur(3px);
+        mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 		-webkit-mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 	}
 </style>

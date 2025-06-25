@@ -65,8 +65,8 @@
 		-webkit-mask: linear-gradient(
 			to bottom,
 			transparent 0%,
-			black 10%,
-			black 90%,
+			black 5%,
+			black 95%,
 			transparent 100%
 		);
 	}

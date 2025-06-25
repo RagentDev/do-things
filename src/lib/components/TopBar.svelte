@@ -16,7 +16,9 @@
 
 <style>
 	.top-bar {
-		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
+		backdrop-filter: blur(3px);
+		-webkit-backdrop-filter: blur(3px);
+		mask: linear-gradient(to top, black 0%, black 80%, transparent 100%);
+		-webkit-mask: linear-gradient(to top, black 0%, black 80%, transparent 100%);
 	}
 </style>
