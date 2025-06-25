@@ -1,4 +1,5 @@
 ﻿<script lang="ts">
+	import { browser } from '$app/environment';
 	import { logger } from '$lib/runes/loggerRunes.svelte';
 	import ContainerConsoleLogs from '$lib/components/console/ContainerConsoleLogs.svelte';
 	import ContainerConsoleHeader from '$lib/components/console/ContainerConsoleHeader.svelte';
@@ -13,8 +14,8 @@
 	let isResizing = $state<boolean>(false);
 	let position = $state<Position>({ x: 0, y: 0 });
 	let size = $state<{ width: number; height: number }>({
-		width: Math.min(600, window.innerWidth - 40),
-		height: Math.min(384, window.innerHeight - 40)
+		width: browser ? Math.min(600, window.innerWidth - 40) : 600,
+		height: browser ? Math.min(384, window.innerHeight - 40) : 384
 	});
 	let dragOffset = $state<Position>({ x: 0, y: 0 });
 	let resizeOffset = $state<Position>({ x: 0, y: 0 });
@@ -23,7 +24,7 @@
 
 	// Reset position and size when console becomes visible
 	$effect(() => {
-		if (isVisible && !wasVisible) {
+		if (browser && isVisible && !wasVisible) {
 			// Responsive sizing
 			const maxWidth = Math.min(600, window.innerWidth - 40);
 			const maxHeight = Math.min(384, window.innerHeight - 40);
@@ -80,6 +81,8 @@
 	}
 
 	function handleMouseMove(e: MouseEvent): void {
+		if (!browser) return;
+		
 		if (isDragging) {
 			position = {
 				x: Math.max(0, Math.min(window.innerWidth - size.width, e.clientX - dragOffset.x)),
@@ -100,21 +103,21 @@
 	}
 
 	function handleTouchMove(e: TouchEvent): void {
-		if (e.touches.length === 1) {
-			const touch = e.touches[0];
-			if (isDragging) {
-				position = {
-					x: Math.max(
-						0,
-						Math.min(window.innerWidth - size.width, touch.clientX - dragOffset.x)
-					),
-					y: Math.max(
-						0,
-						Math.min(window.innerHeight - size.height, touch.clientY - dragOffset.y)
-					)
-				};
-				e.preventDefault();
-			}
+		if (!browser || e.touches.length !== 1) return;
+		
+		const touch = e.touches[0];
+		if (isDragging) {
+			position = {
+				x: Math.max(
+					0,
+					Math.min(window.innerWidth - size.width, touch.clientX - dragOffset.x)
+				),
+				y: Math.max(
+					0,
+					Math.min(window.innerHeight - size.height, touch.clientY - dragOffset.y)
+				)
+			};
+			e.preventDefault();
 		}
 	}
 
