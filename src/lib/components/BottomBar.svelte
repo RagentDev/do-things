@@ -4,7 +4,10 @@
 </script>
 
 <!-- $lib/components/BottomBar.svelte -->
-<div class="flex items-center justify-center gap-4 border-fade-top" style="min-height: 120px">
+<div
+	class="bottom-bar flex items-center justify-center gap-4 border-fade-top"
+	style="height: var(--menu-bar-height)"
+>
 	<MrButton class="active-icon" variant="text" color="secondary" size="xl" icon>
 		<MrIcon class="text-success" icon="mdi-home" size="xl" />
 	</MrButton>
@@ -35,5 +38,12 @@
 		height: 3px;
 		background-color: #10b981;
 		border-radius: 9999px;
+	}
+
+	.bottom-bar {
+		backdrop-filter: blur(3px);
+		-webkit-backdrop-filter: blur(3px);
+		mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+		-webkit-mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 	}
 </style>

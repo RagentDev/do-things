@@ -11,7 +11,7 @@
 </script>
 
 {#if logger}
-	<div class="fixed" style="bottom: 5px; right: 5px;">
+	<div class="fixed" style="bottom: 120px; right: 20px;">
 		<MrButton variant="filled" color="secondary" icon onclick={onToggle}>
 			<MrIcon icon="mdi-console" class="text-primary" size="lg" />
 			<span
