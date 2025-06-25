@@ -82,7 +82,7 @@
 
 	function handleMouseMove(e: MouseEvent): void {
 		if (!browser) return;
-		
+
 		if (isDragging) {
 			position = {
 				x: Math.max(0, Math.min(window.innerWidth - size.width, e.clientX - dragOffset.x)),
@@ -104,7 +104,7 @@
 
 	function handleTouchMove(e: TouchEvent): void {
 		if (!browser || e.touches.length !== 1) return;
-		
+
 		const touch = e.touches[0];
 		if (isDragging) {
 			position = {
