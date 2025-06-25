@@ -43,7 +43,7 @@
 	.bottom-bar {
 		backdrop-filter: blur(3px);
 		-webkit-backdrop-filter: blur(3px);
-        mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
+		mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 		-webkit-mask: linear-gradient(to bottom, black 0%, black 80%, transparent 100%);
 	}
 </style>
